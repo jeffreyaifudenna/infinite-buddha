@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "chmod +x ./node_modules/.bin/* && vite build",
+    "build": "node node_modules/vite/bin/vite.js build",
     "preview": "vite preview",
     "generate": "python generate_buddha.py"
   },
