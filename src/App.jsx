@@ -182,6 +182,7 @@ export default function App() {
                 src={resolveUrl(heroPiece.imageUrl)}
                 alt={altText(heroPiece)}
                 decoding="async"
+                fetchpriority="high"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
             </button>
