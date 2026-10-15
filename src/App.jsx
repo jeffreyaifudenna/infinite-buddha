@@ -137,7 +137,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-6 h-12 flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <span className="font-medium tracking-wider text-xs uppercase text-gray-200">
-              Infinite Buddha
+              The Infinite Buddha
             </span>
           </div>
 
@@ -309,7 +309,7 @@ export default function App() {
             </div>
 
             <p className="text-sm text-gray-300 font-light leading-relaxed">
-              Infinite Buddha is an ongoing generative art experiment blending ancient contemplative iconography with automated low-poly sacred geometry. Every piece in this archive is autonomously brought to life through a script-driven pipeline powered by Python and the Gemini API.
+              The Infinite Buddha is generative art project by JeffreyAiFudenna. With just a very human hope that if we can create anything with AI, that we choose to create good and propsperous things for everyone to enjoy.
             </p>
 
             <div className="pt-2">
@@ -326,15 +326,10 @@ export default function App() {
       )}
 
       {/* Footer */}
-      <footer className="w-full py-12 px-6 border-t border-[#1f232d] text-xs font-mono text-gray-500">
+        <footer className="w-full py-12 px-6 border-t border-[#1f232d] text-xs font-mono text-gray-500">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
-          <div>© {new Date().getFullYear()} Infinite Buddha. Autonomous Sacred Geometry.</div>
-          <div className="text-gray-400">Powered by Python, Gemini API, and React</div>
-          {/* TODO: point these at your real profiles */}
-          <div className="flex items-center space-x-6">
-            <a href="https://instagram.com" target="_blank" rel="noreferrer" className="hover:text-buddha-gold transition-colors">Instagram</a>
-            <a href="https://github.com" target="_blank" rel="noreferrer" className="hover:text-buddha-gold transition-colors">GitHub</a>
-          </div>
+          <div>© {new Date().getFullYear()} The Infinite Buddha. Autonomous Buddha Image Gen.</div>
+          <div className="text-gray-400">Powered by JeffreyAiFudenna, Python, Gemini API, ClaudeCode and React</div>
         </div>
       </footer>
     </div>
