@@ -175,7 +175,7 @@ export default function App() {
               className="block w-full aspect-square overflow-hidden bg-buddha-card rounded-lg border border-[#1f232d] shadow-2xl cursor-pointer group relative transition-all duration-300 hover:border-buddha-gold focus-visible:border-buddha-gold focus-visible:outline-none hover:shadow-[0_0_25px_rgba(212,175,55,0.3)]"
             >
               <div className="absolute top-4 left-4 z-20 bg-black/70 backdrop-blur-md px-3.5 py-1.5 rounded-md border border-buddha-gold/40 text-buddha-gold text-xs font-mono tracking-widest uppercase shadow-lg">
-                Buddha of the Day
+                Buddha generated Today 
               </div>
 
               <img
