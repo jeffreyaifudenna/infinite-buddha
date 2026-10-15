@@ -223,8 +223,7 @@ export default function App() {
             role="dialog"
             aria-modal="true"
             aria-label={`Artwork details: ${selectedArt.title}`}
-            className="bg-buddha-card border border-[#1f232d] rounded-2xl max-w-4xl w-full max-h-[92vh] overflow-y-auto shadow-2xl grid grid-cols-1 md:grid-cols-2 relative"
-            onClick={(e) => e.stopPropagation()}
+            className="bg-buddha-card border border-[#1f232d] rounded-2xl max-w-4xl w-full max-h-[92vh] overflow-y-auto shadow-2xl grid grid-cols-1 md:grid-cols-2 relative cursor-pointer"
           >
             <button
               type="button"
@@ -251,7 +250,7 @@ export default function App() {
                 </div>
                 <div>
                   <h4 className="text-xs font-mono uppercase tracking-wider text-gray-500 mb-1">Generation Prompt</h4>
-                  <p className="text-gray-300 text-xs font-mono bg-buddha-dark p-3 rounded-lg border border-[#1f232d] leading-relaxed max-h-40 overflow-y-auto">
+                  <p onClick={(e) => e.stopPropagation()} className="text-gray-300 text-xs font-mono bg-buddha-dark p-3 rounded-lg border border-[#1f232d] leading-relaxed max-h-40 overflow-y-auto cursor-text">
                     {selectedArt.prompt}
                   </p>
                 </div>
@@ -270,7 +269,7 @@ export default function App() {
               </div>
               <button
                 type="button"
-                onClick={() => copyPrompt(selectedArt.prompt)}
+                onClick={(e) => { e.stopPropagation(); copyPrompt(selectedArt.prompt); }}
                 className="w-full py-3 px-4 bg-[#1f232d] hover:bg-[#272b36] text-gray-200 text-xs font-mono tracking-wider uppercase rounded-lg transition-colors flex items-center justify-center space-x-2 border border-[#272b36]"
               >
                 <span>{copyLabel}</span>
