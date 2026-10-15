@@ -304,12 +304,15 @@ export default function App() {
             </button>
 
             <div className="space-y-2">
-              <h3 className="text-xl font-serif text-gray-100 tracking-wide">About Infinite Buddha</h3>
-              <p className="text-xs font-mono text-buddha-gold tracking-widest uppercase">Autonomous Generative Art</p>
+              <h3 className="text-xl font-serif text-gray-100 tracking-wide">About The Infinite Buddha</h3>
+              <p className="text-xs font-mono text-buddha-gold tracking-widest uppercase">A new Buddha Everyday</p>
             </div>
 
+                        <p className="text-sm text-gray-300 font-light leading-relaxed">
+              The Infinite Buddha is a generative art project by JeffreyAiFudenna. Every night, a script combines a randomly chosen subject, setting and style into a prompt, and Google's Gemini AI renders a new Buddha. No two are alike.
+            </p>
             <p className="text-sm text-gray-300 font-light leading-relaxed">
-              The Infinite Buddha is generative art project by JeffreyAiFudenna. With just a very human hope that if we can create anything with AI, that we choose to create good and propsperous things for everyone to enjoy.
+              It comes from a very human hope: that if we can create anything with AI, we choose to create good and prosperous things for everyone to enjoy.
             </p>
 
             <div className="pt-2">
