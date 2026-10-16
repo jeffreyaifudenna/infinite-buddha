@@ -2,9 +2,8 @@ name: Generate Infinite Buddha Art
 
 on:
   schedule:
-    - cron: "0 8 * * *" # every day at 8:00 UTC (1:00 AM Pacific in summer)
+    - cron: "17 8 * * *" # every day at 8:17 UTC (1:17 AM Pacific in summer)
   workflow_dispatch: # lets you run it manually from the Actions tab
-
 permissions:
   contents: write
 
