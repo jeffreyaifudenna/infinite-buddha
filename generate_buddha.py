@@ -31,87 +31,121 @@ MIME_TO_EXT = {
 }
 
 SUBJECTS = [
-    "Low-poly sacred geometry Buddha meditating",
-    "Minimalist low-poly Buddha statue resting",
+    # Grounded, Organic, Humble & Peaceful Realism
+    "Hand-carved sandstone Buddha resting in quiet contemplation",
+    "Weathered teak wood Buddha sculpture with gentle, compassionate features",
+    "Simple unglazed terracotta Buddha figure embodying humble serenity",
+    "Minimalist river-stone Buddha statue nestled among smooth pebbles",
+    "Aged bronze Buddha with a soft, weathered patina and calm expression",
+    "Hand-hewn granite Buddha bust with subtle, peaceful chisel marks",
+    "Reclining wooden Buddha carved from reclaimed timber",
+    "Subtle stone Buddha silhouette half-covered in soft green moss",
+    "Matte ceramic Buddha figure radiating a calm, meditative stillness",
+    "Classic white marble Buddha statue catching soft morning sunbeams",
+    "Worn soapstone Buddha figure with smooth, touch-soft contours",
+    "Simple bamboo-framed meditative Buddha silhouette",
+    "Humble earthenware Buddha figure resting on a bed of dry autumn leaves",
+    "Calm seated Buddha carved from dark walnut wood",
+    "Minimalist river-rock stack forming a serene meditative figure",
+    "Soft porcelain Buddha figure with a delicate, peaceful glaze",
+    "Weathered limestone Buddha head with quiet, timeless eyes",
+    "Hand-carved cedar Buddha figure resting in quiet dignity",
+    "Subtle clay Buddha sculpture drying under gentle sunlight",
+    "Peaceful bronze Buddha with an understated, gentle smile",
+    "Realistic hand-carved weathered teak wood Buddha statue with serene facial expressions",
+    "Grounded raw sandstone Buddha sculpture showing subtle natural rock texture and chisel marks",
+    "Life-sized realistic bronze Buddha seated in lotus position with a soft weathered patina",
+    "Simple unglazed terracotta Buddha figure with a warm, humble, and serene presence",
+    "Realistic ancient stone Buddha relief carving embedded naturally into a mossy granite cliff",
+
+    # Sacred Geometry & Celestial Forms
+    "Low-poly sacred geometry Buddha floating in deep meditative stillness",
+    "Minimalist low-poly Buddha statue resting in lotus pose",
     "Abstract low-poly golden Buddha face with intricate sacred geometry patterns",
     "Holographic wireframe Buddha sitting in lotus pose",
-    "Crystalline prismatic Buddha sculpture refracting light",
-    "Gargantuan monolithic stone Buddha carved into a neon canyon cliffside",
+    "Crystalline prismatic Buddha sculpture refracting light into complex mandalas",
     "Floating cybernetic Buddha head composed of golden floating polygons",
     "Transcendent translucent glass Buddha holding a glowing energy sphere",
-    "Bioluminescent moss-covered ancient Buddha statue fused with organic technology",
-    "Cybernetic bronze Buddha with intricate circuitry running down its arms",
-    "Floating mandala-patterned wireframe Buddha radiating soft pastel energy",
-    "Steampunk brass Buddha statue with glowing amber vacuum tubes",
-    "Celestial stellar Buddha figure woven entirely from golden stardust and filaments",
+    "Celestial stellar Buddha figure woven entirely from golden stardust filaments",
     "Obsidian-carved minimalist Buddha bust inlaid with pulsating golden veins",
-    "Liquid chrome Buddha sculpture melting into a serene geometric reflection pool",
-    "Quantum holographic Buddha projected from a floating golden ring apparatus",
-    "Ethereal translucent jade Buddha illuminated from within by sacred light geometry",
-    "Carved wooden Buddha statue from weathered cedar wood resting peacefully",
-    "Simple hand-carved stone Buddha statue nestled among river moss and wild ferns",
-    "Unglazed terracotta Buddha figure embodying a grounded and serene presence",
+    "Floating mandala-patterned wireframe Buddha radiating soft pastel energy fields"
 ]
 
 ENVIRONMENTS = [
-    "in a neon cyberpunk garden with glowing flora",
-    "in a serene zen rock garden under a blood-red supermoon",
-    "floating inside a bioluminescent deep-sea sacred temple",
-    "surrounded by a glowing quantum matrix and digital constellations",
-    "atop a misty neon-lit skyscraper rooftop overlooking a futuristic Tokyo cyberpunk skyline",
-    "inside an ancient cosmic cathedral where starlight pours through stained glass etched with sacred geometry",
-    "deep within a subterranean crystal cavern illuminated by pulsing neon ley lines",
-    "floating gracefully in a zero-gravity orbital space station overlooking a vibrant planet curve",
-    "amidst an ethereal floating island archipelago shrouded in mystical cyberpunk mist",
-    "in a futuristic bamboo forest where the stalks are made of glowing green fiber optics",
-    "within a towering digital archive library filled with floating holographic scrolls",
-    "on a reflective salt flat mirror under an aurora borealis sky pulsing with gold and teal",
-    "inside a monolithic brutalist concrete temple illuminated by a single vertical ray of golden sunlight",
-    "floating above a tranquil midnight ocean reflecting a majestic cosmic nebula",
-    "within a subterranean sanctuary lined with endless rows of glowing ancient scrolls",
-    "amidst an ethereal floating garden of stone monoliths and luminous lotus flowers",
-    "deep inside a high-tech orbital research sanctuary overlooking the curvature of a golden-rimmed earth",
-    "under the shade of an ancient oak tree in an all natural forest grove",
-    "beside a babbling mountain stream in a serene, grounded natural landscape",
-    "within a simple life wooden sanctuary surrounded by wild uncultivated flora",
+    # All-Natural, Organic & Grounded Landscapes
+    "under the shade of an ancient weeping willow beside a quiet pond",
+    "beside a gentle mountain stream flowing over smooth river stones",
+    "within a tranquil bamboo grove with soft sunlight filtering through the stalks",
+    "in a serene zen rock garden surrounded by raked white gravel and pine needles",
+    "under a quiet autumn canopy of golden maple leaves and soft morning mist",
+    "in a peaceful moss-covered forest clearing touched by early dawn light",
+    "on a quiet hillside overlooking a misty green valley at sunrise",
+    "inside a humble wooden tea pavilion with open windows framing a quiet garden",
+    "beside a still mountain lake reflecting a clear twilight sky",
+    "within a secluded stone courtyard shaded by blossoming cherry trees",
+    "on a soft bed of pine needles under the boughs of a towering pine tree",
+    "in a quiet rural courtyard filled with potted ferns and soft morning dew",
+    "beside a trickling garden waterfall surrounded by ferns and smooth rocks",
+    "within a minimalist wooden sanctuary overlooking a quiet misty meadow",
+    "underneath an old gnarled olive tree in a sunlit Mediterranean orchard",
+    "beside a quiet winding country path lined with wild lavender and sage",
+    "in a sheltered garden alcove filled with quiet shade and soft earth",
+    "on a high mountain overlook bathed in the quiet warmth of dawn",
+    "within a peaceful earthen hermitage surrounded by quiet rolling hills",
+    "beside a shallow forest pool reflecting quiet clouds and tall reeds",
+    "under the shaded canopy of an ancient oak tree in a quiet, all-natural forest grove",
     "deep in a quiet, low-tech rural valley with soft morning sunlight filtering through pine needles",
+
+    # Cosmic, Cathedral & Temple Spaces
+    "inside an ancient cosmic cathedral where starlight pours through stained glass etched with sacred geometry",
+    "surrounded by a glowing quantum matrix and digital star constellations",
+    "on a reflective salt flat mirror under an aurora borealis sky pulsing with gold and teal",
+    "floating inside a bioluminescent subterranean crystal cavern illuminated by pulsing ley lines",
+    "floating gracefully in a zero-gravity orbital space station overlooking a vibrant planet curve",
+    "inside a monolithic brutalist concrete temple illuminated by a single vertical ray of golden sunlight"
 ]
 
 STYLES = [
+    # Naturalistic, Organic & Authentic Lighting
+    "photorealistic National Geographic photography style, natural sunlight, organic earth tones, sharp focus",
+    "warm golden hour rim lighting, authentic material textures, soft natural depth of field, 8k resolution",
+    "diffused overcast daylight, matte stone and wood grain textures, quiet contemplative mood, masterpiece",
+    "soft morning sunlight, natural earth tones, fine film grain, serene unpretentious aesthetic",
+    "authentic raw material finish, subtle shadows, peaceful outdoor ambient lighting, hyper-detailed photorealism",
+    "quiet natural lighting, subtle earth textures, understated elegance, minimalist organic art style",
+    "gentle diffused light, rich tactile textures, serene and grounded composition, timeless aesthetic",
+    "warm amber morning light, soft shadows, organic material finish, peaceful meditative mood",
+    "subtle directional lighting, matte stone and wood textures, serene minimalist composition, master craft quality",
+    "natural open-air lighting, calm organic gradients, quiet contemplative atmosphere, fine art aesthetic",
+
+    # Cinematic & Sacred High-Contrast Lighting
     "cinematic dramatic side-lighting, vibrant gold and iridescent teal gradients, 8k resolution, photorealistic digital art",
-    "ethereal soft glow, dark moody cyberpunk aesthetic with metallic gold accents",
+    "ethereal soft glow, dark moody aesthetic with floating geometric light particles, ultra-detailed digital art",
     "hyper-detailed volumetric lighting, mystic haze, unreal engine 5 render style",
-    "cyber-zen aesthetic, floating geometric light particles, ultra-detailed generative art",
-    "vaporwave pastel lighting, iridescent chrome reflections, synthwave color grading, 3D octane render",
     "chiaroscuro lighting, moody dark obsidian background, ultra-sharp polygonal edges, masterpiece",
-    "bioluminescent ambient glow, volumetric smoke, cinematic depth of field, futuristic religious iconography",
-    "cybernetic neon-noir lighting, high-contrast rim light, razor-sharp geometric polygons, futuristic art gallery piece",
-    "extreme cinematic chiaroscuro, matte obsidian textures, glowing gold leaf accents, masterpiece museum exhibition quality",
-    "hyper-detailed volumetric atmospheric haze, dramatic golden hour rim lighting, ultra-sharp polygonal precision",
-    "surreal minimalist aesthetic, immaculate shadows, high-end gallery lighting, 8k resolution",
-    "organic grounded texture, natural earth tones, soft morning light, hand-crafted simple life aesthetic, serene atmosphere",
-    "warm organic wood grain, raw stone textures, peaceful natural lighting, unpretentious all natural look",
+    "extreme cinematic chiaroscuro, matte obsidian textures, glowing gold leaf accents, masterpiece museum exhibition quality"
 ]
 
 TITLES = [
-    "Ethereal Meditation", "Digital Nirvana", "Quantum Awakening",
-    "Neon Samadhi", "Obsidian Zen", "Astral Geometry", "Cyber Enlightenment",
-    "Prismatic Silence", "Holographic Void", "Stellar Transcendence",
-    "Silicon Karma", "Matrix Awakening", "Infinite Stillness", "Cosmic Resonance",
-    "Cybernetic Sutra", "Neon Lotus", "Data Nirvana", "Singularity Zen",
-    "Stellar Genesis", "Obsidian Sanctuary", "Golden Horizon", "Quantum Silence", "Sacred Echo",
-    "Grounded Earth", "Serene Woods", "Simple Life", "Natural Harmony", "Rooted Stillness",
+    "Quiet Stillness", "Serene Dawn", "Grounded Peace", "Gentle Awakening",
+    "Whispering Pines", "Inner Calm", "River Stone", "Soft Morning",
+    "Sublime Silence", "Peaceful Valley", "Timeless Solitude", "Earthen Grace",
+    "Humble Path", "Quiet Waters", "Rooted Harmony", "Mindful Breath",
+    "Mossy Stone", "Dawn Meditation", "Calm Sanctuary", "Tranquil Shade",
+    "Natural Balance", "Quiet Horizon", "Pure Simplicity", "Serene Grove",
+    "Simple Life", "Rooted Stillness", "Grounded Earth", "Quantum Silence", "Sacred Echo"
 ]
 
-# Tags are derived from the words in the final prompt, so they match the image.
+# Tags are derived from the keywords in the final prompt.
 TAG_KEYWORDS = {
-    "Low-Poly": ("low-poly", "polygon"),
-    "Sacred Geometry": ("sacred", "geometr", "mandala"),
-    "Cyber-Zen": ("cyber", "neon", "holograph", "quantum", "digital", "circuit", "matrix"),
+    "Serenity": ("serene", "peaceful", "calm", "tranquil", "quiet", "stillness"),
     "Grounded Nature": (
-        "natural", "oak", "stream", "rural", "wooden", "terracotta",
-        "moss", "forest", "wild", "cedar", "pine", "earth tones",
+        "natural", "moss", "stream", "forest", "stone", "wood", 
+        "earth", "pine", "garden", "river", "leaves", "meadow", "oak", "cedar", "bamboo"
     ),
+    "Hand-Crafted": ("carved", "ceramic", "terracotta", "bronze", "sculpture", "chiseled", "granite", "sandstone"),
+    "Sacred Geometry": ("low-poly", "geometry", "wireframe", "crystalline", "prismatic", "mandala", "holographic"),
+    "Soft Light": ("morning", "sunlight", "dawn", "soft", "warm", "diffused", "golden hour"),
 }
 
 
