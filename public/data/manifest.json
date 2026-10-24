@@ -1,5 +1,25 @@
 [
   {
+    "id": "buddha-20261024-085124",
+    "title": "Sacred Echo #665",
+    "imageUrl": "output/buddha-20261024-085124.jpg",
+    "prompt": "Floating mandala-patterned wireframe Buddha radiating soft pastel energy fields inside a humble wooden tea pavilion with open windows framing a quiet garden, diffused overcast daylight, matte stone and wood grain textures, quiet contemplative mood, masterpiece",
+    "subject": "Floating mandala-patterned wireframe Buddha radiating soft pastel energy fields",
+    "environment": "inside a humble wooden tea pavilion with open windows framing a quiet garden",
+    "style": "diffused overcast daylight, matte stone and wood grain textures, quiet contemplative mood, masterpiece",
+    "seed": 691414,
+    "date": "2026-10-24",
+    "tags": [
+      "Serenity",
+      "Grounded Nature",
+      "Sacred Geometry",
+      "Soft Light",
+      "AI Art"
+    ],
+    "thumbUrl": "output/thumbs/buddha-20261024-085124.webp",
+    "displayUrl": "output/display/buddha-20261024-085124.webp"
+  },
+  {
     "id": "buddha-20261023-085429",
     "title": "Pure Simplicity #882",
     "imageUrl": "output/buddha-20261023-085429.jpg",
