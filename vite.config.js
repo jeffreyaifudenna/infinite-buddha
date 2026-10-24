@@ -60,14 +60,26 @@ function sharePages() {
       const base = siteUrl()
       if (!base) console.warn("[share-pages] No SITE_URL set; link previews will have no image.")
 
-      const withMeta = (page, { title, description, pagePath, imagePath }) =>
+      // Preload the image the page opens on, so the browser starts fetching it with
+      // the HTML instead of waiting for the JS and manifest to load first.
+      const preloadTag = (art) => {
+        const src = art && (art.displayUrl || art.imageUrl)
+        return src
+          ? `\n    <link rel="preload" as="image" href="./${escapeHtml(String(src).replace(/^\/+/, ""))}" fetchpriority="high" />`
+          : ""
+      }
+
+      const withMeta = (page, { title, description, pagePath, imagePath, preload }) =>
         page
           .replace(/<title>[\s\S]*?<\/title>/, `<title>${escapeHtml(title)}</title>`)
           .replace(
             /<meta name="description"[^>]*>/,
             `<meta name="description" content="${escapeHtml(description)}" />`
           )
-          .replace(/\s*<\/head>/, `\n${metaTags({ title, description, pagePath, imagePath, base })}\n  </head>`)
+          .replace(
+            /\s*<\/head>/,
+            `${preloadTag(preload)}\n${metaTags({ title, description, pagePath, imagePath, base })}\n  </head>`
+          )
 
       const latest = Array.isArray(manifest) ? manifest[0] : null
       fs.writeFileSync(
@@ -77,6 +89,7 @@ function sharePages() {
           description: SITE_DESCRIPTION,
           pagePath: "",
           imagePath: latest?.imageUrl,
+          preload: latest,
         })
       )
 
@@ -90,11 +103,33 @@ function sharePages() {
             description: SITE_DESCRIPTION,
             pagePath: art.id,
             imagePath: art.imageUrl,
+            preload: art,
           })
         )
         count++
       }
       console.log(`[share-pages] Wrote ${count} piece pages${base ? ` for ${base}` : ""}`)
+
+      // Sitemap and robots.txt, so search engines can find every piece page.
+      // A sitemap needs absolute URLs, so it is only written when the site URL is known.
+      const pieces = (Array.isArray(manifest) ? manifest : []).filter((a) => a?.id && /^[\w-]+$/.test(a.id))
+      if (base) {
+        const urlTag = (loc, lastmod) =>
+          `  <url><loc>${escapeHtml(loc)}</loc>${lastmod ? `<lastmod>${escapeHtml(lastmod)}</lastmod>` : ""}</url>`
+        const sitemap = [
+          '<?xml version="1.0" encoding="UTF-8"?>',
+          '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+          urlTag(base, latest?.date),
+          ...pieces.map((a) => urlTag(new URL(a.id, base).href, a.date)),
+          "</urlset>",
+          "",
+        ].join("\n")
+        fs.writeFileSync(path.join(outDir, "sitemap.xml"), sitemap)
+      }
+      fs.writeFileSync(
+        path.join(outDir, "robots.txt"),
+        `User-agent: *\nAllow: /\n${base ? `\nSitemap: ${new URL("sitemap.xml", base).href}\n` : ""}`
+      )
     },
   }
 }

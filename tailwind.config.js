@@ -11,8 +11,6 @@ export default {
           dark: "#0a0b0e",
           card: "#13151c",
           gold: "#d4af37",
-          goldLight: "#f3e5ab",
-          muted: "#9ca3af",
         }
       },
       fontFamily: {

@@ -152,6 +152,24 @@ export default function App() {
       if (e.key === "Escape") {
         setSelectedArt(null);
         setIsAboutOpen(false);
+        return;
+      }
+      // Keep Tab focus inside the open dialog instead of the page behind it.
+      if (e.key !== "Tab") return;
+      const dialog = document.querySelector('[role="dialog"]');
+      if (!dialog) return;
+      const focusable = [
+        ...dialog.querySelectorAll('button, a[href], [tabindex]:not([tabindex="-1"])'),
+      ].filter((el) => !el.disabled && el.offsetParent !== null);
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && (document.activeElement === first || !dialog.contains(document.activeElement))) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && (document.activeElement === last || !dialog.contains(document.activeElement))) {
+        e.preventDefault();
+        first.focus();
       }
     };
     document.addEventListener("keydown", onKey);
@@ -275,15 +293,15 @@ export default function App() {
       <header className="sticky top-0 z-40 w-full backdrop-blur-md bg-buddha-dark/80 border-b border-[#1f232d]">
         <div className="max-w-7xl mx-auto px-6 h-12 flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <span className="font-medium tracking-wider text-xs uppercase text-gray-200">
+            <h1 className="font-medium tracking-wider text-xs uppercase text-gray-200">
               The Infinite Buddha
-            </span>
+            </h1>
           </div>
 
           <button
             type="button"
             onClick={() => setIsAboutOpen(true)}
-            className="text-[11px] font-mono tracking-widest uppercase text-gray-400 hover:text-buddha-gold transition-colors bg-transparent border-none cursor-pointer"
+            className="-mr-3 min-h-[44px] min-w-[44px] px-3 text-[11px] font-mono tracking-widest uppercase text-gray-400 hover:text-buddha-gold transition-colors bg-transparent border-none cursor-pointer"
           >
             About
           </button>
@@ -324,7 +342,7 @@ export default function App() {
                 alt={altText(heroPiece)}
                 decoding="async"
                 fetchpriority="high"
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                className="w-full h-full object-cover transition-transform duration-700 motion-safe:group-hover:scale-105"
               />
             </button>
           </section>
@@ -346,7 +364,7 @@ export default function App() {
                   alt={altText(art)}
                   loading="lazy"
                   decoding="async"
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-500 motion-safe:group-hover:scale-105"
                 />
                 <DateBadge date={art.date} />
               </button>
@@ -509,7 +527,15 @@ export default function App() {
       {/* Footer */}
         <footer className="w-full py-12 px-6 border-t border-[#1f232d] text-xs font-mono text-gray-500">
         <div className="max-w-7xl mx-auto text-center">
-          A New Buddha Everyday since October 14, 2026 · Open Source
+          A New Buddha Everyday since October 14, 2026 ·{" "}
+          <a
+            href="https://github.com/jeffreyaifudenna/infinite-buddha"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-gray-400 underline decoration-[#272b36] underline-offset-4 hover:text-buddha-gold hover:decoration-buddha-gold transition-colors"
+          >
+            Open Source
+          </a>
         </div>
       </footer>
     </div>

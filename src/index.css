@@ -7,18 +7,3 @@
     @apply bg-[#0a0b0e] text-gray-100 font-sans antialiased selection:bg-[#d4af37] selection:text-black;
   }
 }
-
-@keyframes dustBurst {
-  0% {
-    transform: scale(0.4) translate(0px, 0px);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1.8) translate(-30px, -40px);
-    opacity: 0;
-  }
-}
-
-.animate-dust-burst {
-  animation: dustBurst 0.8s ease-out forwards;
-}
