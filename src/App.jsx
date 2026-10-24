@@ -13,6 +13,36 @@ const altText = (art) => {
   return text.length > 140 ? `${text.slice(0, 137)}...` : text;
 };
 
+// Format a manifest date ("YYYY-MM-DD") as "Oct 22, 2026" without timezone shifts.
+const formatDate = (d) => {
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(d || ""));
+  if (!m) return "";
+  return new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3])).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+};
+
+const todayKey = () => {
+  const n = new Date();
+  const p = (x) => String(x).padStart(2, "0");
+  return `${n.getFullYear()}-${p(n.getMonth() + 1)}-${p(n.getDate())}`;
+};
+
+function DateBadge({ date, className = "" }) {
+  const label = formatDate(date);
+  if (!label) return null;
+  return (
+    <time
+      dateTime={date}
+      className={`absolute top-2 left-1/2 -translate-x-1/2 z-20 pointer-events-none whitespace-nowrap bg-black/60 backdrop-blur-sm px-2.5 py-1 rounded text-buddha-gold text-[10px] font-mono tracking-widest uppercase ${className}`}
+    >
+      {label}
+    </time>
+  );
+}
+
 function CloseIcon() {
   return (
     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -175,7 +205,9 @@ export default function App() {
               className="block w-full aspect-square overflow-hidden bg-buddha-card rounded-lg border border-[#1f232d] shadow-2xl cursor-pointer group relative transition-all duration-300 hover:border-buddha-gold focus-visible:border-buddha-gold focus-visible:outline-none hover:shadow-[0_0_25px_rgba(212,175,55,0.3)]"
             >
               <div className="absolute top-4 left-4 z-20 bg-black/70 backdrop-blur-md px-3.5 py-1.5 rounded-md border border-buddha-gold/40 text-buddha-gold text-xs font-mono tracking-widest uppercase shadow-lg">
-                Buddha generated Today 
+                {heroPiece.date === todayKey()
+                  ? "Buddha generated Today"
+                  : `Buddha generated ${formatDate(heroPiece.date) || "Today"}`}
               </div>
 
               <img
@@ -207,6 +239,7 @@ export default function App() {
                   decoding="async"
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
+                <DateBadge date={art.date} />
               </button>
             ))}
           </div>
@@ -235,7 +268,8 @@ export default function App() {
             >
               <CloseIcon />
             </button>
-            <div className="bg-black flex items-center justify-center aspect-square">
+            <div className="bg-black flex items-center justify-center aspect-square relative">
+              <DateBadge date={selectedArt.date} className="top-3 text-xs" />
               <img
                 src={resolveUrl(selectedArt.imageUrl)}
                 alt={altText(selectedArt)}
