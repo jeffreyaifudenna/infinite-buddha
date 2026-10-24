@@ -6,6 +6,7 @@ on:
   workflow_dispatch: # lets you run it manually from the Actions tab
 permissions:
   contents: write
+  issues: write # open/close the "generation failed" alert issue
 
 # Never run two generations at the same time (e.g. manual + scheduled).
 concurrency:
@@ -48,3 +49,32 @@ jobs:
           git commit -m "feat: auto-generate new Buddha piece"
           git pull --rebase origin main
           git push origin HEAD:main
+
+      # Alert by opening a GitHub issue (which emails the repo owner) when any step
+      # fails, e.g. an expired API key or an outage. Repeat failures comment on it.
+      - name: Open an alert issue on failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          OWNER: ${{ github.repository_owner }}
+        run: |
+          title="Nightly Buddha generation failed"
+          body="@$OWNER tonight's Buddha was not generated ($(date -u +%Y-%m-%d)). Logs: $RUN_URL"
+          existing=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open --search "\"$title\" in:title" --json number --jq '.[0].number // empty')
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --repo "$GITHUB_REPOSITORY" --body "$body"
+          else
+            gh issue create --repo "$GITHUB_REPOSITORY" --title "$title" --body "$body"
+          fi
+
+      # Once a run succeeds again, close any open alert so it doesn't linger.
+      - name: Close the alert issue after a successful run
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          title="Nightly Buddha generation failed"
+          for n in $(gh issue list --repo "$GITHUB_REPOSITORY" --state open --search "\"$title\" in:title" --json number --jq '.[].number'); do
+            gh issue close "$n" --repo "$GITHUB_REPOSITORY" --comment "Generation is working again: a new Buddha was published."
+          done

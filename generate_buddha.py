@@ -18,11 +18,14 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parent
 OUTPUT_DIR = ROOT / "public" / "output"
 THUMB_DIR = OUTPUT_DIR / "thumbs"
+DISPLAY_DIR = OUTPUT_DIR / "display"
 MANIFEST_PATH = ROOT / "public" / "data" / "manifest.json"
 
 MODEL = os.environ.get("BUDDHA_MODEL", "gemini-3.1-flash-image")
 MAX_ATTEMPTS = 3
 THUMB_SIZE = 640
+DISPLAY_SIZE = 1600  # cap only; current images are ~1024px, so they keep full resolution
+DISPLAY_QUALITY = 85  # ~200 KB vs ~1 MB for the original JPG
 
 MIME_TO_EXT = {
     "image/png": "png",
@@ -183,17 +186,71 @@ def request_image(client, prompt_text, seed):
     raise RuntimeError(f"Image generation failed after {MAX_ATTEMPTS} attempts: {last_error}")
 
 
-def save_thumbnail(image_bytes, thumb_path):
-    """Write a small WebP thumbnail. Returns True on success."""
+def save_webp(image_bytes, out_path, max_size, quality):
+    """Write a WebP copy no larger than max_size. Returns True on success."""
     try:
         with Image.open(io.BytesIO(image_bytes)) as img:
             img = img.convert("RGB")
-            img.thumbnail((THUMB_SIZE, THUMB_SIZE), Image.LANCZOS)
-            img.save(thumb_path, "WEBP", quality=80, method=6)
+            img.thumbnail((max_size, max_size), Image.LANCZOS)
+            img.save(out_path, "WEBP", quality=quality, method=6)
         return True
-    except Exception as exc:  # noqa: BLE001 - thumbnail is optional
-        print(f"   warning: could not create thumbnail: {exc}")
+    except Exception as exc:  # noqa: BLE001 - WebP copies are optional
+        print(f"   warning: could not create {out_path.name}: {exc}")
         return False
+
+
+def prompt_parts(entry):
+    """(subject, environment, style) of a past piece. Older entries only stored the
+    full prompt, so match it against the current lists (None if it isn't in them)."""
+    prompt = entry.get("prompt", "")
+    subject = entry.get("subject") or next((s for s in SUBJECTS if prompt.startswith(s)), None)
+    environment = entry.get("environment") or next((e for e in ENVIRONMENTS if e in prompt), None)
+    style = entry.get("style") or next((s for s in STYLES if prompt.endswith(s)), None)
+    return subject, environment, style
+
+
+def pick_fresh(options, last_used):
+    """Pick an option that has never been used; once all have been, pick from the
+    third that was used longest ago. last_used maps option -> days ago (0 = newest)."""
+    unused = [o for o in options if o not in last_used]
+    if unused:
+        return random.choice(unused)
+    oldest_first = sorted(options, key=lambda o: last_used[o], reverse=True)
+    return random.choice(oldest_first[: max(1, len(options) // 3)])
+
+
+def choose_prompt(manifest):
+    """Build a prompt whose subject, setting and style were not used recently, and
+    whose full text has never been used. Returns (subject, environment, style, prompt)."""
+    last_used = ({}, {}, {})
+    for age, entry in enumerate(manifest):  # newest first, so the first sighting is the latest
+        for seen, part in zip(last_used, prompt_parts(entry)):
+            if part is not None:
+                seen.setdefault(part, age)
+    used_prompts = {e.get("prompt") for e in manifest}
+
+    for _ in range(100):
+        subject = pick_fresh(SUBJECTS, last_used[0])
+        environment = pick_fresh(ENVIRONMENTS, last_used[1])
+        style = pick_fresh(STYLES, last_used[2])
+        prompt_text = f"{subject} {environment}, {style}"
+        if prompt_text not in used_prompts:
+            return subject, environment, style, prompt_text
+    raise RuntimeError("Could not find an unused prompt; add more subjects, settings or styles.")
+
+
+def choose_title(manifest):
+    """A title name not used recently, with a number so the full title is unique."""
+    used_titles = {e.get("title") for e in manifest}
+    last_used = {}
+    for age, entry in enumerate(manifest):
+        last_used.setdefault(str(entry.get("title", "")).split(" #")[0], age)
+    name = pick_fresh(TITLES, {t: a for t, a in last_used.items() if t in TITLES})
+    for _ in range(1000):
+        title = f"{name} #{random.randint(100, 999)}"
+        if title not in used_titles:
+            return title
+    raise RuntimeError(f"Ran out of numbers for the title {name!r}.")
 
 
 def load_manifest():
@@ -233,17 +290,16 @@ def generate_art_piece():
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     THUMB_DIR.mkdir(parents=True, exist_ok=True)
+    DISPLAY_DIR.mkdir(parents=True, exist_ok=True)
     MANIFEST_PATH.parent.mkdir(parents=True, exist_ok=True)
 
     # Fail fast on a corrupt manifest, before spending an API call.
-    load_manifest()
+    manifest = load_manifest()
 
     # Reads GEMINI_API_KEY from the environment.
     client = genai.Client()
 
-    prompt_text = (
-        f"{random.choice(SUBJECTS)} {random.choice(ENVIRONMENTS)}, {random.choice(STYLES)}"
-    )
+    subject, environment, style, prompt_text = choose_prompt(manifest)
     seed = random.randint(100000, 999999)
     now = datetime.now()
     date_str = now.strftime("%Y-%m-%d")
@@ -259,21 +315,27 @@ def generate_art_piece():
     (OUTPUT_DIR / filename).write_bytes(image_bytes)
     print(f"-> Saved image to {OUTPUT_DIR / filename}")
 
-    thumb_name = f"buddha-{timestamp_id}.webp"
-    has_thumb = save_thumbnail(image_bytes, THUMB_DIR / thumb_name)
+    webp_name = f"buddha-{timestamp_id}.webp"
+    has_thumb = save_webp(image_bytes, THUMB_DIR / webp_name, THUMB_SIZE, 80)
+    has_display = save_webp(image_bytes, DISPLAY_DIR / webp_name, DISPLAY_SIZE, DISPLAY_QUALITY)
 
     # URLs are relative (no leading slash) so the site also works under a subpath.
     entry = {
         "id": f"buddha-{timestamp_id}",
-        "title": f"{random.choice(TITLES)} #{random.randint(100, 999)}",
+        "title": choose_title(manifest),
         "imageUrl": f"output/{filename}",
         "prompt": prompt_text,
+        "subject": subject,
+        "environment": environment,
+        "style": style,
         "seed": seed,
         "date": date_str,
         "tags": derive_tags(prompt_text),
     }
     if has_thumb:
-        entry["thumbUrl"] = f"output/thumbs/{thumb_name}"
+        entry["thumbUrl"] = f"output/thumbs/{webp_name}"
+    if has_display:
+        entry["displayUrl"] = f"output/display/{webp_name}"
 
     update_manifest(entry)
 

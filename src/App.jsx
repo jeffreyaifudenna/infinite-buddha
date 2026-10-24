@@ -320,7 +320,7 @@ export default function App() {
               </div>
 
               <img
-                src={resolveUrl(heroPiece.imageUrl)}
+                src={resolveUrl(heroPiece.displayUrl || heroPiece.imageUrl)}
                 alt={altText(heroPiece)}
                 decoding="async"
                 fetchpriority="high"
@@ -385,7 +385,7 @@ export default function App() {
             >
               <DateBadge date={selectedArt.date} className="top-3 text-xs" />
               <img
-                src={resolveUrl(selectedArt.imageUrl)}
+                src={resolveUrl(selectedArt.displayUrl || selectedArt.imageUrl)}
                 alt={altText(selectedArt)}
                 className="w-full h-full object-cover"
               />
