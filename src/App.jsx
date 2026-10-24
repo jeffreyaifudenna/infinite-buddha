@@ -364,9 +364,8 @@ export default function App() {
 
       {/* Footer */}
         <footer className="w-full py-12 px-6 border-t border-[#1f232d] text-xs font-mono text-gray-500">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
-          <div>© {new Date().getFullYear()} The Infinite Buddha. Autonomous Buddha Image Gen.</div>
-          <div className="text-gray-400">Powered by JeffreyAiFudenna, Python, Gemini API, ClaudeCode and React</div>
+        <div className="max-w-7xl mx-auto text-center">
+          A New Buddha Everyday since October 14, 2026 · Open Source
         </div>
       </footer>
     </div>
