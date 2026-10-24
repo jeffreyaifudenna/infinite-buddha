@@ -7,6 +7,21 @@ const PAGE_SIZE = 12;
 const resolveUrl = (p) =>
   p ? `${import.meta.env.BASE_URL}${String(p).replace(/^\/+/, "")}` : "";
 
+const SITE_TITLE = "The Infinite Buddha";
+
+// Each piece has its own page next to index.html ("/buddha-20261023-085429"),
+// written at build time with that piece's link-preview tags (see vite.config.js).
+const siteRoot = () => new URL(".", window.location.href);
+
+const pieceUrl = (id) => new URL(encodeURIComponent(id), siteRoot()).href;
+
+const pieceIdFromPath = () => {
+  const m = /\/([\w-]+?)(?:\.html)?\/?$/.exec(window.location.pathname);
+  return m && m[1] !== "index" ? decodeURIComponent(m[1]) : null;
+};
+
+const SWIPE_MIN_PX = 50;
+
 const altText = (art) => {
   const prompt = art.prompt ? `: ${art.prompt}` : "";
   const text = `${art.title}${prompt}`;
@@ -51,18 +66,33 @@ function CloseIcon() {
   );
 }
 
+function ChevronIcon({ direction }) {
+  return (
+    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        d={direction === "left" ? "M15 19l-7-7 7-7" : "M9 5l7 7-7 7"}
+      />
+    </svg>
+  );
+}
+
 export default function App() {
   const [artworks, setArtworks] = useState([]);
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE * 2);
   const [selectedArt, setSelectedArt] = useState(null);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
   const [copyState, setCopyState] = useState("idle"); // idle | copied | failed
+  const [linkState, setLinkState] = useState("idle"); // idle | copied | failed
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const sentinelRef = useRef(null);
   const closeBtnRef = useRef(null);
   const lastFocusedRef = useRef(null);
+  const touchStartRef = useRef(null);
 
   const modalOpen = Boolean(selectedArt) || isAboutOpen;
 
@@ -80,6 +110,10 @@ export default function App() {
       .then((data) => {
         if (!Array.isArray(data)) throw new Error("Manifest is not a list");
         setArtworks(data);
+        // Open the piece a shared link points to, if it exists.
+        const wanted = pieceIdFromPath();
+        const match = wanted && data.find((a) => a.id === wanted);
+        if (match) setSelectedArt(match);
         setLoading(false);
       })
       .catch((err) => {
@@ -131,14 +165,76 @@ export default function App() {
     };
   }, [modalOpen]);
 
-  const copyPrompt = async (text) => {
+  // Keep the address bar pointing at the open piece, so it can be copied or bookmarked.
+  useEffect(() => {
+    if (loading) return;
+    const url = selectedArt ? pieceUrl(selectedArt.id) : siteRoot().href;
+    if (url !== window.location.href) window.history.replaceState(null, "", url);
+    document.title = selectedArt ? `${selectedArt.title} · ${SITE_TITLE}` : `${SITE_TITLE} | Generative Art Feed`;
+  }, [selectedArt, loading]);
+
+  // Move through the archive from inside the modal. Artworks are newest first,
+  // so +1 is the older piece (to the right in the grid) and -1 the newer one.
+  const stepPiece = (offset) => {
+    setSelectedArt((current) => {
+      if (!current) return current;
+      const i = artworks.findIndex((a) => a.id === current.id);
+      return artworks[i + offset] || current;
+    });
+    setCopyState("idle");
+    setLinkState("idle");
+  };
+
+  useEffect(() => {
+    if (!selectedArt) return undefined;
+    const onKey = (e) => {
+      if (e.key === "ArrowLeft") stepPiece(-1);
+      if (e.key === "ArrowRight") stepPiece(1);
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [Boolean(selectedArt), artworks]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const onSwipeStart = (e) => {
+    const t = e.touches[0];
+    touchStartRef.current = { x: t.clientX, y: t.clientY };
+  };
+
+  const onSwipeEnd = (e) => {
+    const start = touchStartRef.current;
+    touchStartRef.current = null;
+    if (!start) return;
+    const t = e.changedTouches[0];
+    const dx = t.clientX - start.x;
+    const dy = t.clientY - start.y;
+    // Only count clearly horizontal swipes, so scrolling the details still works.
+    if (Math.abs(dx) >= SWIPE_MIN_PX && Math.abs(dx) > Math.abs(dy) * 1.5) {
+      stepPiece(dx < 0 ? 1 : -1);
+    }
+  };
+
+  const copyText = async (text, setState) => {
     try {
       await navigator.clipboard.writeText(text);
-      setCopyState("copied");
+      setState("copied");
     } catch {
-      setCopyState("failed");
+      setState("failed");
     }
-    setTimeout(() => setCopyState("idle"), 2000);
+    setTimeout(() => setState("idle"), 2000);
+  };
+
+  // Phones get the native share sheet; desktops copy the link.
+  const sharePiece = async (art) => {
+    const url = pieceUrl(art.id);
+    if (navigator.share && window.matchMedia("(pointer: coarse)").matches) {
+      try {
+        await navigator.share({ title: `${art.title} · The Infinite Buddha`, url });
+      } catch {
+        // Share sheet dismissed - nothing to do.
+      }
+      return;
+    }
+    copyText(url, setLinkState);
   };
 
   if (loading) {
@@ -159,6 +255,19 @@ export default function App() {
       : copyState === "failed"
       ? "Copy failed - select the text manually"
       : "Copy Full Prompt";
+
+  const linkLabel =
+    linkState === "copied"
+      ? "Link Copied to Clipboard"
+      : linkState === "failed"
+      ? "Copy failed - copy the address bar instead"
+      : "Share This Buddha";
+
+  const selectedIndex = selectedArt ? artworks.findIndex((a) => a.id === selectedArt.id) : -1;
+  const hasNewer = selectedIndex > 0;
+  const hasOlder = selectedIndex >= 0 && selectedIndex < artworks.length - 1;
+  const navBtnClass =
+    "absolute top-1/2 -translate-y-1/2 z-20 bg-black/60 hover:bg-black/80 backdrop-blur-sm text-gray-200 hover:text-buddha-gold p-2 rounded-full border border-[#272b36] transition-colors";
 
   return (
     <div className="min-h-screen bg-buddha-dark text-gray-100 flex flex-col selection:bg-buddha-gold selection:text-black">
@@ -268,17 +377,42 @@ export default function App() {
             >
               <CloseIcon />
             </button>
-            <div className="bg-black flex items-center justify-center aspect-square relative">
+            <div
+              className="bg-black flex items-center justify-center aspect-square relative"
+              onTouchStart={onSwipeStart}
+              onTouchEnd={onSwipeEnd}
+            >
               <DateBadge date={selectedArt.date} className="top-3 text-xs" />
               <img
                 src={resolveUrl(selectedArt.imageUrl)}
                 alt={altText(selectedArt)}
                 className="w-full h-full object-cover"
               />
+              {hasNewer && (
+                <button
+                  type="button"
+                  onClick={(e) => { e.stopPropagation(); stepPiece(-1); }}
+                  aria-label="Newer Buddha"
+                  title="Newer (←)"
+                  className={`${navBtnClass} left-3`}
+                >
+                  <ChevronIcon direction="left" />
+                </button>
+              )}
+              {hasOlder && (
+                <button
+                  type="button"
+                  onClick={(e) => { e.stopPropagation(); stepPiece(1); }}
+                  aria-label="Older Buddha"
+                  title="Older (→)"
+                  className={`${navBtnClass} right-3`}
+                >
+                  <ChevronIcon direction="right" />
+                </button>
+              )}
             </div>
             <div className="p-8 flex flex-col justify-between space-y-6">
               <div className="space-y-4">
-                <div className="text-xs font-mono text-buddha-gold tracking-widest uppercase">{selectedArt.date}</div>
                 <div>
                   <h4 className="text-xs font-mono uppercase tracking-wider text-gray-500 mb-1">Title</h4>
                   <p className="text-gray-100 text-lg font-serif">{selectedArt.title}</p>
@@ -302,13 +436,22 @@ export default function App() {
                   </ul>
                 )}
               </div>
-              <button
-                type="button"
-                onClick={(e) => { e.stopPropagation(); copyPrompt(selectedArt.prompt); }}
-                className="w-full py-3 px-4 bg-[#1f232d] hover:bg-[#272b36] text-gray-200 text-xs font-mono tracking-wider uppercase rounded-lg transition-colors flex items-center justify-center space-x-2 border border-[#272b36]"
-              >
-                <span>{copyLabel}</span>
-              </button>
+              <div className="space-y-2">
+                <button
+                  type="button"
+                  onClick={(e) => { e.stopPropagation(); sharePiece(selectedArt); }}
+                  className="w-full py-3 px-4 bg-buddha-gold/10 hover:bg-buddha-gold/20 text-buddha-gold text-xs font-mono tracking-wider uppercase rounded-lg transition-colors flex items-center justify-center space-x-2 border border-buddha-gold/40"
+                >
+                  <span>{linkLabel}</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={(e) => { e.stopPropagation(); copyText(selectedArt.prompt, setCopyState); }}
+                  className="w-full py-3 px-4 bg-[#1f232d] hover:bg-[#272b36] text-gray-200 text-xs font-mono tracking-wider uppercase rounded-lg transition-colors flex items-center justify-center space-x-2 border border-[#272b36]"
+                >
+                  <span>{copyLabel}</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
