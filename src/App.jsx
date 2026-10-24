@@ -58,9 +58,9 @@ function DateBadge({ date, className = "" }) {
   );
 }
 
-function CloseIcon() {
+function CloseIcon({ className = "w-5 h-5" }) {
   return (
-    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
     </svg>
   );
@@ -366,16 +366,17 @@ export default function App() {
             role="dialog"
             aria-modal="true"
             aria-label={`Artwork details: ${selectedArt.title}`}
-            className="bg-buddha-card border border-[#1f232d] rounded-2xl max-w-4xl w-full max-h-[92vh] overflow-y-auto shadow-2xl grid grid-cols-1 md:grid-cols-2 relative cursor-pointer"
+            className="bg-buddha-card border border-[#1f232d] rounded-2xl max-w-4xl w-full max-h-[92vh] overflow-y-auto shadow-2xl grid grid-cols-1 md:grid-cols-2 relative"
+            onClick={(e) => e.stopPropagation()}
           >
             <button
               type="button"
               ref={closeBtnRef}
               onClick={() => setSelectedArt(null)}
               aria-label="Close"
-              className="absolute top-4 right-4 z-20 bg-[#1f232d] hover:bg-[#272b36] text-gray-300 p-2 rounded-full transition-colors"
+              className="absolute top-4 right-4 z-20 bg-[#1f232d] hover:bg-[#272b36] text-gray-300 hover:text-buddha-gold p-3 rounded-full border border-[#272b36] transition-colors"
             >
-              <CloseIcon />
+              <CloseIcon className="w-6 h-6" />
             </button>
             <div
               className="bg-black flex items-center justify-center aspect-square relative"
@@ -391,7 +392,7 @@ export default function App() {
               {hasNewer && (
                 <button
                   type="button"
-                  onClick={(e) => { e.stopPropagation(); stepPiece(-1); }}
+                  onClick={() => stepPiece(-1)}
                   aria-label="Newer Buddha"
                   title="Newer (←)"
                   className={`${navBtnClass} left-3`}
@@ -402,7 +403,7 @@ export default function App() {
               {hasOlder && (
                 <button
                   type="button"
-                  onClick={(e) => { e.stopPropagation(); stepPiece(1); }}
+                  onClick={() => stepPiece(1)}
                   aria-label="Older Buddha"
                   title="Older (→)"
                   className={`${navBtnClass} right-3`}
@@ -419,7 +420,7 @@ export default function App() {
                 </div>
                 <div>
                   <h4 className="text-xs font-mono uppercase tracking-wider text-gray-500 mb-1">Generation Prompt</h4>
-                  <p onClick={(e) => e.stopPropagation()} className="text-gray-300 text-xs font-mono bg-buddha-dark p-3 rounded-lg border border-[#1f232d] leading-relaxed max-h-40 overflow-y-auto cursor-text">
+                  <p className="text-gray-300 text-xs font-mono bg-buddha-dark p-3 rounded-lg border border-[#1f232d] leading-relaxed max-h-40 overflow-y-auto">
                     {selectedArt.prompt}
                   </p>
                 </div>
@@ -439,14 +440,14 @@ export default function App() {
               <div className="space-y-2">
                 <button
                   type="button"
-                  onClick={(e) => { e.stopPropagation(); sharePiece(selectedArt); }}
+                  onClick={() => sharePiece(selectedArt)}
                   className="w-full py-3 px-4 bg-buddha-gold/10 hover:bg-buddha-gold/20 text-buddha-gold text-xs font-mono tracking-wider uppercase rounded-lg transition-colors flex items-center justify-center space-x-2 border border-buddha-gold/40"
                 >
                   <span>{linkLabel}</span>
                 </button>
                 <button
                   type="button"
-                  onClick={(e) => { e.stopPropagation(); copyText(selectedArt.prompt, setCopyState); }}
+                  onClick={() => copyText(selectedArt.prompt, setCopyState)}
                   className="w-full py-3 px-4 bg-[#1f232d] hover:bg-[#272b36] text-gray-200 text-xs font-mono tracking-wider uppercase rounded-lg transition-colors flex items-center justify-center space-x-2 border border-[#272b36]"
                 >
                   <span>{copyLabel}</span>
