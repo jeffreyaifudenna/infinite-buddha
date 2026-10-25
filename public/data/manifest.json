@@ -1,5 +1,24 @@
 [
   {
+    "id": "buddha-20261025-085052",
+    "title": "Serene Dawn #233",
+    "imageUrl": "output/buddha-20261025-085052.jpg",
+    "prompt": "Simple unglazed terracotta Buddha figure embodying humble serenity within a minimalist wooden sanctuary overlooking a quiet misty meadow, quiet natural lighting, subtle earth textures, understated elegance, minimalist organic art style",
+    "subject": "Simple unglazed terracotta Buddha figure embodying humble serenity",
+    "environment": "within a minimalist wooden sanctuary overlooking a quiet misty meadow",
+    "style": "quiet natural lighting, subtle earth textures, understated elegance, minimalist organic art style",
+    "seed": 477284,
+    "date": "2026-10-25",
+    "tags": [
+      "Serenity",
+      "Grounded Nature",
+      "Hand-Crafted",
+      "AI Art"
+    ],
+    "thumbUrl": "output/thumbs/buddha-20261025-085052.webp",
+    "displayUrl": "output/display/buddha-20261025-085052.webp"
+  },
+  {
     "id": "buddha-20261024-085124",
     "title": "Sacred Echo #665",
     "imageUrl": "output/buddha-20261024-085124.jpg",
