@@ -1,5 +1,32 @@
 [
   {
+    "id": "buddha-20261026-090317",
+    "title": "Mossy Stone #998",
+    "imageUrl": "output/buddha-20261026-090317.jpg",
+    "prompt": "A photorealistic photograph of a Tang-dynasty Chinese pale jade Buddha seated in lotus position with eyes closed in calm, beside a winding country path lined with wild lavender and sage at twilight. Lit by a single shaft of light. A palette of muted greens and greys. Richly detailed down to the smallest surface.",
+    "theme": "organic",
+    "variables": {
+      "material": "pale jade",
+      "pose": "seated in lotus position",
+      "expression": "with eyes closed in calm",
+      "lineage": "Tang-dynasty Chinese",
+      "place": "beside a winding country path lined with wild lavender and sage",
+      "time": "at twilight",
+      "medium": "photorealistic photograph",
+      "lighting": "a single shaft of light",
+      "palette": "muted greens and greys",
+      "finish": "richly detailed down to the smallest surface"
+    },
+    "seed": 939545,
+    "date": "2026-10-26",
+    "tags": [
+      "Serenity",
+      "AI Art"
+    ],
+    "thumbUrl": "output/thumbs/buddha-20261026-090317.webp",
+    "displayUrl": "output/display/buddha-20261026-090317.webp"
+  },
+  {
     "id": "buddha-20261025-085052",
     "title": "Serene Dawn #233",
     "imageUrl": "output/buddha-20261025-085052.jpg",
