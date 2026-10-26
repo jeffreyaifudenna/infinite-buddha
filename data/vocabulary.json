@@ -1,0 +1,283 @@
+{
+  "_comment": [
+    "Words that generate_buddha.py combines into each night's prompt.",
+    "themes: relative weight of each day's overall theme. Every word lists the themes it fits.",
+    "slots: in the order words are chosen; a word's 'excludes' applies to slots chosen after it.",
+    "  fill: chance (0-1) that the slot appears in a given prompt. 1 = always.",
+    "  words: text is inserted into the template as-is, so each must fit its sentence:",
+    "         'A {medium} of a {scale} {lineage} {material} Buddha {pose} {expression},",
+    "         {place} {time} {atmosphere} {companions}. Lit by {lighting}. A palette of",
+    "         {palette}. {camera}. {finish}.' Carry your own preposition (\"at dawn\").",
+    "  excludes: a slot name (\"camera\") drops that whole slot, \"slot:text\" blocks one word.",
+    "  status: omit or \"active\"; \"retired\" keeps the word on file but never picks it."
+  ],
+  "themes": {
+    "organic": 3,
+    "cosmic": 1
+  },
+  "slots": [
+    {
+      "name": "material",
+      "fill": 1,
+      "words": [
+        { "text": "hand-carved sandstone", "themes": ["organic"] },
+        { "text": "weathered teak", "themes": ["organic"] },
+        { "text": "unglazed terracotta", "themes": ["organic"] },
+        { "text": "smooth river-stone", "themes": ["organic"] },
+        { "text": "green-patinated bronze", "themes": ["organic"] },
+        { "text": "hand-hewn granite", "themes": ["organic"] },
+        { "text": "reclaimed driftwood", "themes": ["organic"] },
+        { "text": "moss-covered stone", "themes": ["organic"] },
+        { "text": "matte ceramic", "themes": ["organic"] },
+        { "text": "white marble", "themes": ["organic"] },
+        { "text": "worn soapstone", "themes": ["organic"] },
+        { "text": "dark walnut", "themes": ["organic"] },
+        { "text": "soft-glazed porcelain", "themes": ["organic"] },
+        { "text": "weathered limestone", "themes": ["organic"] },
+        { "text": "carved cedar", "themes": ["organic"] },
+        { "text": "sun-dried clay", "themes": ["organic"] },
+        { "text": "lichen-spotted basalt", "themes": ["organic"] },
+        { "text": "gold-leafed wood", "themes": ["organic"] },
+        { "text": "pale jade", "themes": ["organic", "cosmic"] },
+        { "text": "polished black lacquer", "themes": ["organic", "cosmic"] },
+        { "text": "translucent glass", "themes": ["organic", "cosmic"] },
+        { "text": "gold-veined obsidian", "themes": ["cosmic"] },
+        { "text": "golden low-poly", "themes": ["cosmic"], "excludes": ["lineage"] },
+        { "text": "holographic wireframe", "themes": ["cosmic"], "excludes": ["lineage"] },
+        { "text": "crystalline prismatic glass", "themes": ["cosmic"] },
+        { "text": "glowing stardust", "themes": ["cosmic"], "excludes": ["lineage"] },
+        { "text": "golden-polygon", "themes": ["cosmic"], "excludes": ["lineage"] },
+        { "text": "iridescent chrome", "themes": ["cosmic"] },
+        { "text": "luminous crystal", "themes": ["cosmic"] }
+      ]
+    },
+    {
+      "name": "pose",
+      "fill": 1,
+      "words": [
+        { "text": "seated in lotus position", "themes": ["organic", "cosmic"] },
+        { "text": "seated in meditation with hands resting in the lap", "themes": ["organic", "cosmic"] },
+        { "text": "seated with one hand touching the earth", "themes": ["organic"] },
+        { "text": "reclining on one side", "themes": ["organic"] },
+        { "text": "standing with one hand raised in a gesture of reassurance", "themes": ["organic", "cosmic"] },
+        { "text": "walking with quiet, deliberate steps", "themes": ["organic"] },
+        { "text": "shown as a bust, head and shoulders only", "themes": ["organic", "cosmic"] },
+        { "text": "shown as a head only", "themes": ["organic", "cosmic"] },
+        { "text": "shown as a pair of hands resting in the meditation gesture", "themes": ["organic"], "excludes": ["expression"] },
+        { "text": "carved in relief", "themes": ["organic"] },
+        { "text": "floating in lotus position", "themes": ["cosmic"] },
+        { "text": "dissolving at the edges into drifting particles", "themes": ["cosmic"] }
+      ]
+    },
+    {
+      "name": "expression",
+      "fill": 0.6,
+      "words": [
+        { "text": "with a gentle half-smile", "themes": ["organic", "cosmic"] },
+        { "text": "with eyes closed in calm", "themes": ["organic", "cosmic"] },
+        { "text": "with a serene downcast gaze", "themes": ["organic", "cosmic"] },
+        { "text": "with a soft, compassionate expression", "themes": ["organic"] },
+        { "text": "with timeless quiet eyes", "themes": ["organic", "cosmic"] },
+        { "text": "with fine cracks mended in gold", "themes": ["organic"] },
+        { "text": "with an understated knowing smile", "themes": ["organic", "cosmic"] }
+      ]
+    },
+    {
+      "name": "scale",
+      "fill": 0.5,
+      "words": [
+        { "text": "life-sized", "themes": ["organic", "cosmic"] },
+        { "text": "monumental", "themes": ["organic", "cosmic"] },
+        { "text": "towering", "themes": ["organic", "cosmic"] },
+        { "text": "palm-sized", "themes": ["organic"] },
+        { "text": "small", "themes": ["organic"] },
+        { "text": "miniature", "themes": ["organic"] }
+      ]
+    },
+    {
+      "name": "lineage",
+      "fill": 0.4,
+      "words": [
+        { "text": "Gandharan", "themes": ["organic"] },
+        { "text": "Khmer", "themes": ["organic"] },
+        { "text": "Sukhothai-style Thai", "themes": ["organic"] },
+        { "text": "Kamakura-period Japanese", "themes": ["organic"] },
+        { "text": "Tibetan", "themes": ["organic"] },
+        { "text": "Sri Lankan", "themes": ["organic"] },
+        { "text": "Tang-dynasty Chinese", "themes": ["organic"] },
+        { "text": "contemporary minimalist", "themes": ["organic", "cosmic"] }
+      ]
+    },
+    {
+      "name": "place",
+      "fill": 1,
+      "words": [
+        { "text": "under the shade of an ancient weeping willow beside a quiet pond", "themes": ["organic"] },
+        { "text": "beside a gentle mountain stream flowing over smooth river stones", "themes": ["organic"] },
+        { "text": "within a tranquil bamboo grove", "themes": ["organic"] },
+        { "text": "in a serene zen rock garden of raked white gravel", "themes": ["organic"] },
+        { "text": "under a canopy of golden maple leaves", "themes": ["organic"] },
+        { "text": "in a moss-covered forest clearing", "themes": ["organic"] },
+        { "text": "on a quiet hillside overlooking a green valley", "themes": ["organic"] },
+        { "text": "inside a humble wooden tea pavilion with open windows framing a garden", "themes": ["organic"] },
+        { "text": "beside a still mountain lake", "themes": ["organic"] },
+        { "text": "within a secluded stone courtyard shaded by cherry trees", "themes": ["organic"] },
+        { "text": "on a soft bed of pine needles beneath a towering pine", "themes": ["organic"] },
+        { "text": "in a rural courtyard filled with potted ferns", "themes": ["organic"] },
+        { "text": "beside a trickling garden waterfall surrounded by ferns", "themes": ["organic"] },
+        { "text": "within a minimalist wooden sanctuary overlooking a meadow", "themes": ["organic"] },
+        { "text": "beneath an old gnarled olive tree in a sunlit orchard", "themes": ["organic"] },
+        { "text": "beside a winding country path lined with wild lavender and sage", "themes": ["organic"] },
+        { "text": "in a sheltered garden alcove of deep shade and soft earth", "themes": ["organic"] },
+        { "text": "on a high mountain overlook above drifting clouds", "themes": ["organic"] },
+        { "text": "within a peaceful earthen hermitage among rolling hills", "themes": ["organic"] },
+        { "text": "beside a shallow forest pool edged with tall reeds", "themes": ["organic"] },
+        { "text": "under the canopy of an ancient oak in a forest grove", "themes": ["organic"] },
+        { "text": "on a weathered wooden dock over a glassy lake", "themes": ["organic"] },
+        { "text": "in a terraced hillside tea garden", "themes": ["organic"] },
+        { "text": "on a windswept coastal cliff above a calm sea", "themes": ["organic"] },
+        { "text": "inside a cave temple lit from its entrance", "themes": ["organic"] },
+        { "text": "inside a monolithic brutalist concrete temple", "themes": ["organic", "cosmic"] },
+        { "text": "on a reflective salt flat under an aurora-filled sky", "themes": ["organic", "cosmic"] },
+        { "text": "inside an ancient cosmic cathedral of starlit stained glass etched with sacred geometry", "themes": ["cosmic"] },
+        { "text": "surrounded by a glowing quantum matrix and digital constellations", "themes": ["cosmic"] },
+        { "text": "inside a bioluminescent crystal cavern threaded with pulsing ley lines", "themes": ["cosmic"] },
+        { "text": "in a zero-gravity orbital station overlooking the curve of a vibrant planet", "themes": ["cosmic"] },
+        { "text": "at the center of a vast rotating mandala of light", "themes": ["cosmic"] },
+        { "text": "on a mirror-still black sea beneath a sky of slow-turning galaxies", "themes": ["cosmic"] }
+      ]
+    },
+    {
+      "name": "time",
+      "fill": 0.8,
+      "words": [
+        { "text": "at first light", "themes": ["organic", "cosmic"] },
+        { "text": "at dawn", "themes": ["organic", "cosmic"] },
+        { "text": "in the golden hour", "themes": ["organic", "cosmic"] },
+        { "text": "under an overcast midday sky", "themes": ["organic"] },
+        { "text": "in the late afternoon", "themes": ["organic"] },
+        { "text": "at dusk", "themes": ["organic", "cosmic"] },
+        { "text": "at twilight", "themes": ["organic", "cosmic"] },
+        { "text": "in the blue hour before sunrise", "themes": ["organic"] },
+        { "text": "under a full moon", "themes": ["organic"] },
+        { "text": "in endless starlit night", "themes": ["cosmic"] }
+      ]
+    },
+    {
+      "name": "atmosphere",
+      "fill": 0.5,
+      "words": [
+        { "text": "in soft drifting mist", "themes": ["organic", "cosmic"] },
+        { "text": "as light rain falls", "themes": ["organic"] },
+        { "text": "in gently falling snow", "themes": ["organic"] },
+        { "text": "with incense smoke curling upward", "themes": ["organic", "cosmic"] },
+        { "text": "in clear still air", "themes": ["organic", "cosmic"] },
+        { "text": "among falling cherry blossoms", "themes": ["organic"] },
+        { "text": "among drifting autumn leaves", "themes": ["organic"] },
+        { "text": "with fireflies hovering", "themes": ["organic"] },
+        { "text": "with dust motes suspended in the light", "themes": ["organic", "cosmic"] },
+        { "text": "with glowing light particles drifting", "themes": ["cosmic"] },
+        { "text": "with faint auroras shimmering overhead", "themes": ["cosmic"] }
+      ]
+    },
+    {
+      "name": "companions",
+      "fill": 0.35,
+      "words": [
+        { "text": "with a single deer resting nearby", "themes": ["organic"] },
+        {
+          "text": "with cranes passing overhead",
+          "themes": ["organic"],
+          "excludes": [
+            "place:inside a humble wooden tea pavilion with open windows framing a garden",
+            "place:inside a cave temple lit from its entrance",
+            "place:inside a monolithic brutalist concrete temple"
+          ]
+        },
+        { "text": "with lotus flowers at its base", "themes": ["organic", "cosmic"] },
+        { "text": "with small lit candles arranged before it", "themes": ["organic", "cosmic"] },
+        { "text": "with floating paper lanterns", "themes": ["organic"] },
+        {
+          "text": "with a sparrow perched on its shoulder",
+          "themes": ["organic"],
+          "excludes": ["pose:shown as a head only", "pose:shown as a pair of hands resting in the meditation gesture"]
+        },
+        { "text": "with a cup of tea and a single flower offered before it", "themes": ["organic"] },
+        { "text": "with a small pool of koi at its feet", "themes": ["organic"] },
+        { "text": "with orbiting rings of light", "themes": ["cosmic"] },
+        { "text": "with floating glowing glyphs", "themes": ["cosmic"] }
+      ]
+    },
+    {
+      "name": "medium",
+      "fill": 1,
+      "words": [
+        { "text": "photorealistic photograph", "themes": ["organic", "cosmic"] },
+        { "text": "fine art photograph with subtle film grain", "themes": ["organic", "cosmic"] },
+        { "text": "National Geographic style nature photograph", "themes": ["organic"] },
+        { "text": "documentary photograph with natural colors", "themes": ["organic"] },
+        { "text": "ink wash painting", "themes": ["organic"], "excludes": ["camera"] },
+        { "text": "oil painting on canvas", "themes": ["organic", "cosmic"], "excludes": ["camera"] },
+        { "text": "woodblock print", "themes": ["organic"], "excludes": ["camera"] },
+        { "text": "watercolor on textured paper", "themes": ["organic"], "excludes": ["camera"] },
+        { "text": "charcoal sketch", "themes": ["organic"], "excludes": ["camera", "palette"] },
+        { "text": "gouache illustration", "themes": ["organic"], "excludes": ["camera"] },
+        { "text": "ultra-detailed 3D render", "themes": ["cosmic"] },
+        { "text": "cinematic digital painting", "themes": ["cosmic"], "excludes": ["camera"] }
+      ]
+    },
+    {
+      "name": "lighting",
+      "fill": 0.8,
+      "words": [
+        { "text": "soft diffused natural light", "themes": ["organic", "cosmic"] },
+        { "text": "warm rim lighting", "themes": ["organic", "cosmic"] },
+        { "text": "dappled light filtering through leaves", "themes": ["organic"] },
+        { "text": "a single shaft of light", "themes": ["organic", "cosmic"] },
+        { "text": "dramatic chiaroscuro with deep shadows", "themes": ["organic", "cosmic"] },
+        { "text": "shafts of light through volumetric haze", "themes": ["organic", "cosmic"] },
+        { "text": "the gentle glow of candlelight", "themes": ["organic", "cosmic"] },
+        { "text": "cool overcast light", "themes": ["organic"] },
+        { "text": "light glowing from within the figure", "themes": ["cosmic"] },
+        { "text": "cool backlight with gold highlights", "themes": ["cosmic"] }
+      ]
+    },
+    {
+      "name": "palette",
+      "fill": 0.5,
+      "words": [
+        { "text": "organic earth tones", "themes": ["organic"] },
+        { "text": "muted greens and greys", "themes": ["organic"] },
+        { "text": "warm amber and umber", "themes": ["organic"] },
+        { "text": "soft pastels", "themes": ["organic", "cosmic"] },
+        { "text": "near-monochrome greys with a single warm accent", "themes": ["organic", "cosmic"] },
+        { "text": "black and gold", "themes": ["organic", "cosmic"] },
+        { "text": "gold and iridescent teal", "themes": ["cosmic"] },
+        { "text": "deep indigo and gold", "themes": ["cosmic"] }
+      ]
+    },
+    {
+      "name": "camera",
+      "fill": 0.5,
+      "words": [
+        { "text": "shot on a 35mm lens with shallow depth of field", "themes": ["organic", "cosmic"] },
+        { "text": "a close macro view of the face", "themes": ["organic", "cosmic"] },
+        { "text": "a wide establishing shot", "themes": ["organic", "cosmic"] },
+        { "text": "a low angle looking up at the figure", "themes": ["organic", "cosmic"] },
+        { "text": "seen from directly overhead", "themes": ["organic", "cosmic"] },
+        { "text": "a medium shot at eye level", "themes": ["organic", "cosmic"] }
+      ]
+    },
+    {
+      "name": "finish",
+      "fill": 1,
+      "words": [
+        { "text": "every surface shows fine, crisp texture", "themes": ["organic", "cosmic"] },
+        { "text": "sharp focus with fine detail throughout", "themes": ["organic", "cosmic"] },
+        { "text": "rendered with museum-quality care", "themes": ["organic", "cosmic"] },
+        { "text": "richly detailed down to the smallest surface", "themes": ["organic", "cosmic"] },
+        { "text": "subtle, lifelike detail throughout", "themes": ["organic", "cosmic"] }
+      ]
+    }
+  ]
+}

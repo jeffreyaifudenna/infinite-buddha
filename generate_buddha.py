@@ -1,18 +1,24 @@
 #!/usr/bin/env python3
-"""Generate one Infinite Buddha art piece and add it to public/data/manifest.json."""
+"""Generate one Infinite Buddha art piece and add it to public/data/manifest.json.
 
+The prompt is assembled from words in data/vocabulary.json: one word per "slot"
+(material, pose, place, lighting, ...) dropped into PROMPT_TEMPLATE below.
+
+    python generate_buddha.py              # generate tonight's piece
+    python generate_buddha.py --dry-run 20 # print 20 prompts, no API call, no files written
+"""
+
+import argparse
 import io
 import json
 import os
 import random
+import re
 import sys
 import time
+from collections import defaultdict
 from datetime import datetime
 from pathlib import Path
-
-from google import genai
-from google.genai import types
-from PIL import Image
 
 # Paths are anchored to this file, so the script works from any working directory.
 ROOT = Path(__file__).resolve().parent
@@ -20,6 +26,7 @@ OUTPUT_DIR = ROOT / "public" / "output"
 THUMB_DIR = OUTPUT_DIR / "thumbs"
 DISPLAY_DIR = OUTPUT_DIR / "display"
 MANIFEST_PATH = ROOT / "public" / "data" / "manifest.json"
+VOCABULARY_PATH = ROOT / "data" / "vocabulary.json"
 
 MODEL = os.environ.get("BUDDHA_MODEL", "gemini-3.1-flash-image")
 MAX_ATTEMPTS = 3
@@ -27,107 +34,30 @@ THUMB_SIZE = 640
 DISPLAY_SIZE = 1600  # cap only; current images are ~1024px, so they keep full resolution
 DISPLAY_QUALITY = 85  # ~200 KB vs ~1 MB for the original JPG
 
+# How the chosen words become one prompt: a short descriptive paragraph, which image
+# models follow better than a list of keywords. Each {slot} is replaced by that slot's
+# word, or removed when the slot was not filled; a fragment with none of its slots
+# filled is dropped whole, and render_prompt tidies spaces, commas and articles.
+# Words carry their own prepositions ("at dawn", "with koi gliding...").
+PROMPT_TEMPLATE = (
+    "A {medium} of a {scale} {lineage} {material} Buddha {pose} {expression}",
+    ", {place} {time} {atmosphere} {companions}.",
+    " Lit by {lighting}.",
+    " A palette of {palette}.",
+    " {camera}.",
+    " {finish}.",
+)
+TEMPLATE_SLOTS = set(re.findall(r"{(\w+)}", "".join(PROMPT_TEMPLATE)))
+
+# Chance that one slot borrows a word from the other theme (an organic Buddha in a
+# cosmic place, say) instead of staying strictly on the day's theme.
+CROSSOVER_RATE = 0.1
+
 MIME_TO_EXT = {
     "image/png": "png",
     "image/jpeg": "jpg",
     "image/webp": "webp",
 }
-
-SUBJECTS = [
-    # Grounded, Organic, Humble & Peaceful Realism
-    "Hand-carved sandstone Buddha resting in quiet contemplation",
-    "Weathered teak wood Buddha sculpture with gentle, compassionate features",
-    "Simple unglazed terracotta Buddha figure embodying humble serenity",
-    "Minimalist river-stone Buddha statue nestled among smooth pebbles",
-    "Aged bronze Buddha with a soft, weathered patina and calm expression",
-    "Hand-hewn granite Buddha bust with subtle, peaceful chisel marks",
-    "Reclining wooden Buddha carved from reclaimed timber",
-    "Subtle stone Buddha silhouette half-covered in soft green moss",
-    "Matte ceramic Buddha figure radiating a calm, meditative stillness",
-    "Classic white marble Buddha statue catching soft morning sunbeams",
-    "Worn soapstone Buddha figure with smooth, touch-soft contours",
-    "Simple bamboo-framed meditative Buddha silhouette",
-    "Humble earthenware Buddha figure resting on a bed of dry autumn leaves",
-    "Calm seated Buddha carved from dark walnut wood",
-    "Minimalist river-rock stack forming a serene meditative figure",
-    "Soft porcelain Buddha figure with a delicate, peaceful glaze",
-    "Weathered limestone Buddha head with quiet, timeless eyes",
-    "Hand-carved cedar Buddha figure resting in quiet dignity",
-    "Subtle clay Buddha sculpture drying under gentle sunlight",
-    "Peaceful bronze Buddha with an understated, gentle smile",
-    "Realistic hand-carved weathered teak wood Buddha statue with serene facial expressions",
-    "Grounded raw sandstone Buddha sculpture showing subtle natural rock texture and chisel marks",
-    "Life-sized realistic bronze Buddha seated in lotus position with a soft weathered patina",
-    "Simple unglazed terracotta Buddha figure with a warm, humble, and serene presence",
-    "Realistic ancient stone Buddha relief carving embedded naturally into a mossy granite cliff",
-
-    # Sacred Geometry & Celestial Forms
-    "Low-poly sacred geometry Buddha floating in deep meditative stillness",
-    "Minimalist low-poly Buddha statue resting in lotus pose",
-    "Abstract low-poly golden Buddha face with intricate sacred geometry patterns",
-    "Holographic wireframe Buddha sitting in lotus pose",
-    "Crystalline prismatic Buddha sculpture refracting light into complex mandalas",
-    "Floating cybernetic Buddha head composed of golden floating polygons",
-    "Transcendent translucent glass Buddha holding a glowing energy sphere",
-    "Celestial stellar Buddha figure woven entirely from golden stardust filaments",
-    "Obsidian-carved minimalist Buddha bust inlaid with pulsating golden veins",
-    "Floating mandala-patterned wireframe Buddha radiating soft pastel energy fields"
-]
-
-ENVIRONMENTS = [
-    # All-Natural, Organic & Grounded Landscapes
-    "under the shade of an ancient weeping willow beside a quiet pond",
-    "beside a gentle mountain stream flowing over smooth river stones",
-    "within a tranquil bamboo grove with soft sunlight filtering through the stalks",
-    "in a serene zen rock garden surrounded by raked white gravel and pine needles",
-    "under a quiet autumn canopy of golden maple leaves and soft morning mist",
-    "in a peaceful moss-covered forest clearing touched by early dawn light",
-    "on a quiet hillside overlooking a misty green valley at sunrise",
-    "inside a humble wooden tea pavilion with open windows framing a quiet garden",
-    "beside a still mountain lake reflecting a clear twilight sky",
-    "within a secluded stone courtyard shaded by blossoming cherry trees",
-    "on a soft bed of pine needles under the boughs of a towering pine tree",
-    "in a quiet rural courtyard filled with potted ferns and soft morning dew",
-    "beside a trickling garden waterfall surrounded by ferns and smooth rocks",
-    "within a minimalist wooden sanctuary overlooking a quiet misty meadow",
-    "underneath an old gnarled olive tree in a sunlit Mediterranean orchard",
-    "beside a quiet winding country path lined with wild lavender and sage",
-    "in a sheltered garden alcove filled with quiet shade and soft earth",
-    "on a high mountain overlook bathed in the quiet warmth of dawn",
-    "within a peaceful earthen hermitage surrounded by quiet rolling hills",
-    "beside a shallow forest pool reflecting quiet clouds and tall reeds",
-    "under the shaded canopy of an ancient oak tree in a quiet, all-natural forest grove",
-    "deep in a quiet, low-tech rural valley with soft morning sunlight filtering through pine needles",
-
-    # Cosmic, Cathedral & Temple Spaces
-    "inside an ancient cosmic cathedral where starlight pours through stained glass etched with sacred geometry",
-    "surrounded by a glowing quantum matrix and digital star constellations",
-    "on a reflective salt flat mirror under an aurora borealis sky pulsing with gold and teal",
-    "floating inside a bioluminescent subterranean crystal cavern illuminated by pulsing ley lines",
-    "floating gracefully in a zero-gravity orbital space station overlooking a vibrant planet curve",
-    "inside a monolithic brutalist concrete temple illuminated by a single vertical ray of golden sunlight"
-]
-
-STYLES = [
-    # Naturalistic, Organic & Authentic Lighting
-    "photorealistic National Geographic photography style, natural sunlight, organic earth tones, sharp focus",
-    "warm golden hour rim lighting, authentic material textures, soft natural depth of field, 8k resolution",
-    "diffused overcast daylight, matte stone and wood grain textures, quiet contemplative mood, masterpiece",
-    "soft morning sunlight, natural earth tones, fine film grain, serene unpretentious aesthetic",
-    "authentic raw material finish, subtle shadows, peaceful outdoor ambient lighting, hyper-detailed photorealism",
-    "quiet natural lighting, subtle earth textures, understated elegance, minimalist organic art style",
-    "gentle diffused light, rich tactile textures, serene and grounded composition, timeless aesthetic",
-    "warm amber morning light, soft shadows, organic material finish, peaceful meditative mood",
-    "subtle directional lighting, matte stone and wood textures, serene minimalist composition, master craft quality",
-    "natural open-air lighting, calm organic gradients, quiet contemplative atmosphere, fine art aesthetic",
-
-    # Cinematic & Sacred High-Contrast Lighting
-    "cinematic dramatic side-lighting, vibrant gold and iridescent teal gradients, 8k resolution, photorealistic digital art",
-    "ethereal soft glow, dark moody aesthetic with floating geometric light particles, ultra-detailed digital art",
-    "hyper-detailed volumetric lighting, mystic haze, unreal engine 5 render style",
-    "chiaroscuro lighting, moody dark obsidian background, ultra-sharp polygonal edges, masterpiece",
-    "extreme cinematic chiaroscuro, matte obsidian textures, glowing gold leaf accents, masterpiece museum exhibition quality"
-]
 
 TITLES = [
     "Quiet Stillness", "Serene Dawn", "Grounded Peace", "Gentle Awakening",
@@ -143,12 +73,13 @@ TITLES = [
 TAG_KEYWORDS = {
     "Serenity": ("serene", "peaceful", "calm", "tranquil", "quiet", "stillness"),
     "Grounded Nature": (
-        "natural", "moss", "stream", "forest", "stone", "wood", 
+        "natural", "moss", "stream", "forest", "stone", "wood",
         "earth", "pine", "garden", "river", "leaves", "meadow", "oak", "cedar", "bamboo"
     ),
     "Hand-Crafted": ("carved", "ceramic", "terracotta", "bronze", "sculpture", "chiseled", "granite", "sandstone"),
     "Sacred Geometry": ("low-poly", "geometry", "wireframe", "crystalline", "prismatic", "mandala", "holographic"),
     "Soft Light": ("morning", "sunlight", "dawn", "soft", "warm", "diffused", "golden hour"),
+    "Painted": ("painting", "watercolor", "gouache", "woodblock", "charcoal", "ink wash"),
 }
 
 
@@ -158,8 +89,172 @@ def derive_tags(prompt_text):
     return tags + ["AI Art"]
 
 
+# --------------------------------------------------------------------------- vocabulary
+
+
+def load_vocabulary():
+    """Read data/vocabulary.json, drop retired words and check it is well formed."""
+    try:
+        with open(VOCABULARY_PATH, "r", encoding="utf-8") as f:
+            vocab = json.load(f)
+    except FileNotFoundError:
+        raise SystemExit(f"Vocabulary not found: {VOCABULARY_PATH}")
+    except json.JSONDecodeError as exc:
+        raise SystemExit(f"{VOCABULARY_PATH.name} is not valid JSON: {exc}")
+
+    problems = []
+    themes = vocab.get("themes") or {}
+    if not themes or any(not isinstance(w, (int, float)) or w <= 0 for w in themes.values()):
+        problems.append("'themes' must map each theme to a positive weight")
+
+    slots = vocab.get("slots") or []
+    slot_names = [s.get("name") for s in slots]
+    for name in TEMPLATE_SLOTS - set(slot_names):
+        problems.append(f"template uses slot {{{name}}} which is not in the vocabulary")
+
+    for slot in slots:
+        name = slot.get("name") or "<unnamed>"
+        if name not in TEMPLATE_SLOTS:
+            problems.append(f"slot '{name}' is not used by the template")
+        fill = slot.get("fill", 1)
+        if not isinstance(fill, (int, float)) or not 0 < fill <= 1:
+            problems.append(f"slot '{name}': fill must be a number in (0, 1]")
+        slot["words"] = [w for w in slot.get("words", []) if w.get("status", "active") == "active"]
+        if not slot["words"]:
+            problems.append(f"slot '{name}' has no active words")
+        for word in slot["words"]:
+            text = word.get("text")
+            if not text or not isinstance(text, str):
+                problems.append(f"slot '{name}': every word needs a 'text'")
+                continue
+            if not word.get("themes") or any(t not in themes for t in word["themes"]):
+                problems.append(f"'{text}': themes must be a non-empty subset of {sorted(themes)}")
+            for ex in word.get("excludes", []):
+                if ex.split(":", 1)[0] not in slot_names:
+                    problems.append(f"'{text}': exclusion '{ex}' names an unknown slot")
+
+    if problems:
+        raise SystemExit(f"{VOCABULARY_PATH.name} has problems:\n  - " + "\n  - ".join(problems))
+    return vocab
+
+
+def conflicts(word, slot_name, chosen):
+    """True if `word` (from slot `slot_name`) is excluded by, or itself excludes, any
+    already chosen word. An exclusion is a slot name ("camera") or "slot:text"."""
+
+    def excluded(excludes, other_slot, other_text):
+        return other_slot in excludes or f"{other_slot}:{other_text}" in excludes
+
+    for other_slot, other in chosen.items():
+        if excluded(word.get("excludes", ()), other_slot, other["text"]):
+            return True
+        if excluded(other.get("excludes", ()), slot_name, word["text"]):
+            return True
+    return False
+
+
+def pick_fresh(options, last_used):
+    """Pick an option that has never been used; once all have been, pick from the
+    third that was used longest ago. last_used maps option -> days ago (0 = newest)."""
+    unused = [o for o in options if o not in last_used]
+    if unused:
+        return random.choice(unused)
+    oldest_first = sorted(options, key=lambda o: last_used[o], reverse=True)
+    return random.choice(oldest_first[: max(1, len(options) // 3)])
+
+
+def choose_theme(vocab):
+    themes = vocab["themes"]
+    return random.choices(list(themes), weights=list(themes.values()))[0]
+
+
+def choose_words(vocab, theme, last_used):
+    """Fill the slots for one prompt. Returns {slot name: word dict}.
+
+    Slots are visited in vocabulary order. Each is filled with probability `fill`,
+    from words that fit the day's theme and do not conflict with words already chosen.
+    One slot may cross over to the other theme. A slot with fill 1 is always filled,
+    falling back to off-theme words if it must."""
+    other_themes = [t for t in vocab["themes"] if t != theme]
+    slot_names = [s["name"] for s in vocab["slots"]]
+    crossover = random.choice(slot_names) if other_themes and random.random() < CROSSOVER_RATE else None
+
+    chosen = {}
+    for slot in vocab["slots"]:
+        name = slot["name"]
+        fill = slot.get("fill", 1)
+        if fill < 1 and random.random() >= fill:
+            continue
+        compatible = [w for w in slot["words"] if not conflicts(w, name, chosen)]
+        pool = []
+        if name == crossover:
+            pool = [w for w in compatible if any(t in w["themes"] for t in other_themes)]
+        if not pool:
+            pool = [w for w in compatible if theme in w["themes"]]
+        if not pool and fill >= 1:
+            pool = compatible
+        if not pool:
+            continue
+        by_text = {w["text"]: w for w in pool}
+        chosen[name] = by_text[pick_fresh(list(by_text), last_used.get(name, {}))]
+    return chosen
+
+
+def render_prompt(template, values):
+    """Fill the template fragments, dropping empty slots and whole fragments with no
+    filled slot, then tidy the spaces, punctuation and articles they leave behind."""
+    filled = defaultdict(str, values)
+    kept = [f for f in template if any(filled[s] for s in re.findall(r"{(\w+)}", f))]
+    text = "".join(f.format_map(filled) for f in kept)
+    text = re.sub(r"\s+", " ", text)
+    text = re.sub(r"\s+([,.])", r"\1", text)  # "lake ." -> "lake."
+    text = re.sub(r",(\s*,)+", ",", text)  # ", , ," -> ","
+    text = re.sub(r",\s*\.", ".", text)  # ", ." -> "."
+    text = re.sub(r"\b([Aa]) (?=[aeiouAEIOU])", r"\1n ", text)  # "a ink wash" -> "an ink wash"
+    text = re.sub(r"(^|\. )([a-z])", lambda m: m.group(1) + m.group(2).upper(), text)
+    return text.strip()
+
+
+def choose_prompt(manifest, vocab):
+    """Build a prompt whose words were not used recently and whose full text is new.
+    Returns (theme, {slot: text}, prompt)."""
+    last_used = {}
+    for age, entry in enumerate(manifest):  # newest first, so the first sighting is the latest
+        for slot, text in (entry.get("variables") or {}).items():
+            last_used.setdefault(slot, {}).setdefault(text, age)
+    used_prompts = {e.get("prompt") for e in manifest}
+
+    for _ in range(100):
+        theme = choose_theme(vocab)
+        words = choose_words(vocab, theme, last_used)
+        values = {slot: w["text"] for slot, w in words.items()}
+        prompt_text = render_prompt(PROMPT_TEMPLATE, values)
+        if prompt_text not in used_prompts:
+            return theme, values, prompt_text
+    raise RuntimeError("Could not find an unused prompt; add more words to data/vocabulary.json.")
+
+
+def choose_title(manifest):
+    """A title name not used recently, with a number so the full title is unique."""
+    used_titles = {e.get("title") for e in manifest}
+    last_used = {}
+    for age, entry in enumerate(manifest):
+        last_used.setdefault(str(entry.get("title", "")).split(" #")[0], age)
+    name = pick_fresh(TITLES, {t: a for t, a in last_used.items() if t in TITLES})
+    for _ in range(1000):
+        title = f"{name} #{random.randint(100, 999)}"
+        if title not in used_titles:
+            return title
+    raise RuntimeError(f"Ran out of numbers for the title {name!r}.")
+
+
+# --------------------------------------------------------------------------- generation
+
+
 def request_image(client, prompt_text, seed):
     """Call the model, retrying with backoff. Returns (bytes, mime_type)."""
+    from google.genai import types
+
     last_error = None
     for attempt in range(1, MAX_ATTEMPTS + 1):
         try:
@@ -188,6 +283,8 @@ def request_image(client, prompt_text, seed):
 
 def save_webp(image_bytes, out_path, max_size, quality):
     """Write a WebP copy no larger than max_size. Returns True on success."""
+    from PIL import Image
+
     try:
         with Image.open(io.BytesIO(image_bytes)) as img:
             img = img.convert("RGB")
@@ -197,60 +294,6 @@ def save_webp(image_bytes, out_path, max_size, quality):
     except Exception as exc:  # noqa: BLE001 - WebP copies are optional
         print(f"   warning: could not create {out_path.name}: {exc}")
         return False
-
-
-def prompt_parts(entry):
-    """(subject, environment, style) of a past piece. Older entries only stored the
-    full prompt, so match it against the current lists (None if it isn't in them)."""
-    prompt = entry.get("prompt", "")
-    subject = entry.get("subject") or next((s for s in SUBJECTS if prompt.startswith(s)), None)
-    environment = entry.get("environment") or next((e for e in ENVIRONMENTS if e in prompt), None)
-    style = entry.get("style") or next((s for s in STYLES if prompt.endswith(s)), None)
-    return subject, environment, style
-
-
-def pick_fresh(options, last_used):
-    """Pick an option that has never been used; once all have been, pick from the
-    third that was used longest ago. last_used maps option -> days ago (0 = newest)."""
-    unused = [o for o in options if o not in last_used]
-    if unused:
-        return random.choice(unused)
-    oldest_first = sorted(options, key=lambda o: last_used[o], reverse=True)
-    return random.choice(oldest_first[: max(1, len(options) // 3)])
-
-
-def choose_prompt(manifest):
-    """Build a prompt whose subject, setting and style were not used recently, and
-    whose full text has never been used. Returns (subject, environment, style, prompt)."""
-    last_used = ({}, {}, {})
-    for age, entry in enumerate(manifest):  # newest first, so the first sighting is the latest
-        for seen, part in zip(last_used, prompt_parts(entry)):
-            if part is not None:
-                seen.setdefault(part, age)
-    used_prompts = {e.get("prompt") for e in manifest}
-
-    for _ in range(100):
-        subject = pick_fresh(SUBJECTS, last_used[0])
-        environment = pick_fresh(ENVIRONMENTS, last_used[1])
-        style = pick_fresh(STYLES, last_used[2])
-        prompt_text = f"{subject} {environment}, {style}"
-        if prompt_text not in used_prompts:
-            return subject, environment, style, prompt_text
-    raise RuntimeError("Could not find an unused prompt; add more subjects, settings or styles.")
-
-
-def choose_title(manifest):
-    """A title name not used recently, with a number so the full title is unique."""
-    used_titles = {e.get("title") for e in manifest}
-    last_used = {}
-    for age, entry in enumerate(manifest):
-        last_used.setdefault(str(entry.get("title", "")).split(" #")[0], age)
-    name = pick_fresh(TITLES, {t: a for t, a in last_used.items() if t in TITLES})
-    for _ in range(1000):
-        title = f"{name} #{random.randint(100, 999)}"
-        if title not in used_titles:
-            return title
-    raise RuntimeError(f"Ran out of numbers for the title {name!r}.")
 
 
 def load_manifest():
@@ -293,18 +336,22 @@ def generate_art_piece():
     DISPLAY_DIR.mkdir(parents=True, exist_ok=True)
     MANIFEST_PATH.parent.mkdir(parents=True, exist_ok=True)
 
-    # Fail fast on a corrupt manifest, before spending an API call.
+    # Fail fast on a corrupt manifest or vocabulary, before spending an API call.
     manifest = load_manifest()
+    vocab = load_vocabulary()
 
     # Reads GEMINI_API_KEY from the environment.
+    from google import genai
+
     client = genai.Client()
 
-    subject, environment, style, prompt_text = choose_prompt(manifest)
+    theme, variables, prompt_text = choose_prompt(manifest, vocab)
     seed = random.randint(100000, 999999)
     now = datetime.now()
     date_str = now.strftime("%Y-%m-%d")
     timestamp_id = now.strftime("%Y%m%d-%H%M%S")
 
+    print(f"-> Theme: {theme}")
     print(f"-> Prompt: {prompt_text}")
     print(f"-> Seed: {seed}")
 
@@ -325,9 +372,8 @@ def generate_art_piece():
         "title": choose_title(manifest),
         "imageUrl": f"output/{filename}",
         "prompt": prompt_text,
-        "subject": subject,
-        "environment": environment,
-        "style": style,
+        "theme": theme,
+        "variables": variables,
         "seed": seed,
         "date": date_str,
         "tags": derive_tags(prompt_text),
@@ -340,9 +386,34 @@ def generate_art_piece():
     update_manifest(entry)
 
 
+def dry_run(count):
+    """Print `count` prompts as if generated on consecutive nights. Nothing is written."""
+    manifest = load_manifest()
+    vocab = load_vocabulary()
+    for i in range(count):
+        theme, variables, prompt_text = choose_prompt(manifest, vocab)
+        print(f"[{i + 1:>3}] ({theme}) {prompt_text}")
+        # Pretend the piece was published, so freshness rules shape the next one.
+        manifest.insert(0, {"prompt": prompt_text, "variables": variables})
+
+
 def main():
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument(
+        "--dry-run",
+        nargs="?",
+        const=10,
+        type=int,
+        metavar="N",
+        help="print N prompts (default 10) without generating an image or writing files",
+    )
+    args = parser.parse_args()
+
     try:
-        generate_art_piece()
+        if args.dry_run is not None:
+            dry_run(args.dry_run)
+        else:
+            generate_art_piece()
     except SystemExit:
         raise
     except Exception as exc:  # noqa: BLE001
