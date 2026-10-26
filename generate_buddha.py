@@ -41,7 +41,7 @@ DISPLAY_QUALITY = 85  # ~200 KB vs ~1 MB for the original JPG
 # Words carry their own prepositions ("at dawn", "with koi gliding...").
 PROMPT_TEMPLATE = (
     "A {medium} of a {scale} {lineage} {material} Buddha {pose} {expression}",
-    ", {place} {time} {atmosphere} {companions}.",
+    ", {place} {time} {atmosphere}, {companions}.",
     " Lit by {lighting}.",
     " A palette of {palette}.",
     " {camera}.",
