@@ -1,5 +1,31 @@
 [
   {
+    "id": "buddha-20261027-090006",
+    "title": "Grounded Earth #306",
+    "imageUrl": "output/buddha-20261027-090006.jpg",
+    "prompt": "An oil painting on canvas of a life-sized polished black lacquer Buddha shown as a bust, head and shoulders only, under the canopy of an ancient oak in a forest grove at first light. A palette of organic earth tones. Every surface shows fine, crisp texture.",
+    "theme": "organic",
+    "variables": {
+      "material": "polished black lacquer",
+      "pose": "shown as a bust, head and shoulders only",
+      "scale": "life-sized",
+      "place": "under the canopy of an ancient oak in a forest grove",
+      "time": "at first light",
+      "medium": "oil painting on canvas",
+      "palette": "organic earth tones",
+      "finish": "every surface shows fine, crisp texture"
+    },
+    "seed": 107133,
+    "date": "2026-10-27",
+    "tags": [
+      "Grounded Nature",
+      "Painted",
+      "AI Art"
+    ],
+    "thumbUrl": "output/thumbs/buddha-20261027-090006.webp",
+    "displayUrl": "output/display/buddha-20261027-090006.webp"
+  },
+  {
     "id": "buddha-20261026-090317",
     "title": "Mossy Stone #998",
     "imageUrl": "output/buddha-20261026-090317.jpg",
