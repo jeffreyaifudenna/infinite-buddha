@@ -1,5 +1,33 @@
 [
   {
+    "id": "buddha-20261028-090736",
+    "title": "Whispering Pines #582",
+    "imageUrl": "output/buddha-20261028-090736.jpg",
+    "prompt": "An editorial nature photograph of a miniature worn soapstone Buddha standing with one hand raised in a gesture of reassurance with hairline cracks mended in gold, in a sheltered garden alcove of deep shade and soft earth in the late afternoon among drifting autumn leaves, with a small pool of koi at its feet. Subtle, lifelike detail throughout.",
+    "theme": "organic",
+    "variables": {
+      "material": "worn soapstone",
+      "pose": "standing with one hand raised in a gesture of reassurance",
+      "expression": "with hairline cracks mended in gold",
+      "scale": "miniature",
+      "place": "in a sheltered garden alcove of deep shade and soft earth",
+      "time": "in the late afternoon",
+      "atmosphere": "among drifting autumn leaves",
+      "companions": "with a small pool of koi at its feet",
+      "medium": "editorial nature photograph",
+      "finish": "subtle, lifelike detail throughout"
+    },
+    "seed": 704615,
+    "date": "2026-10-28",
+    "tags": [
+      "Grounded Nature",
+      "Soft Light",
+      "AI Art"
+    ],
+    "thumbUrl": "output/thumbs/buddha-20261028-090736.webp",
+    "displayUrl": "output/display/buddha-20261028-090736.webp"
+  },
+  {
     "id": "buddha-20261027-090006",
     "title": "Grounded Earth #306",
     "imageUrl": "output/buddha-20261027-090006.jpg",
