@@ -8,14 +8,19 @@ file exists. The manifest is only rewritten when something changed.
 
 import json
 import os
+import sys
 from pathlib import Path
 
 from PIL import Image
 
-# Importing only reads constants; generate_buddha runs nothing unless it is the main script.
-from generate_buddha import DISPLAY_QUALITY, DISPLAY_SIZE, THUMB_QUALITY, THUMB_SIZE
-
 ROOT = Path(__file__).resolve().parent
+# Find generate_buddha.py next to this file however the script is launched.
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+# Importing only reads constants; generate_buddha runs nothing unless it is the main script.
+from generate_buddha import DISPLAY_QUALITY, DISPLAY_SIZE, THUMB_QUALITY, THUMB_SIZE  # noqa: E402
+
 PUBLIC = ROOT / "public"
 MANIFEST = PUBLIC / "data" / "manifest.json"
 
