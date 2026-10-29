@@ -536,6 +536,15 @@ export default function App() {
           >
             Open Source
           </a>
+          {" "}·{" "}
+          <a
+            href="https://jeffrey-ai-portfolio.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-gray-400 underline decoration-[#272b36] underline-offset-4 hover:text-buddha-gold hover:decoration-buddha-gold transition-colors"
+          >
+            Jeffrey-Ai-Portfolio
+          </a>
         </div>
       </footer>
     </div>
