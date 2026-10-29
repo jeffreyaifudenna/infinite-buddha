@@ -16,3 +16,12 @@ Edit the JSON to add words; preview the results without spending an API call:
 ```bash
 python generate_buddha.py --dry-run 20
 ```
+
+The image model defaults to `gemini-3.1-flash-image`. If Google renames or retires it,
+set the `BUDDHA_MODEL` environment variable to another image model instead of editing
+the script (for the nightly job, add it to the `env:` of the "Generate new art piece"
+step in `.github/workflows/generate_art.yml`):
+
+```bash
+BUDDHA_MODEL=some-other-image-model python generate_buddha.py
+```
