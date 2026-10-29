@@ -14,10 +14,11 @@ import json
 import os
 import random
 import re
+import shutil
 import sys
 import time
 from collections import defaultdict
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 # Paths are anchored to this file, so the script works from any working directory.
@@ -33,6 +34,7 @@ MAX_ATTEMPTS = 3
 THUMB_SIZE = 640
 DISPLAY_SIZE = 1600  # cap only; current images are ~1024px, so they keep full resolution
 DISPLAY_QUALITY = 85  # ~200 KB vs ~1 MB for the original JPG
+THUMB_QUALITY = 80
 
 # How the chosen words become one prompt: a short descriptive paragraph, which image
 # models follow better than a list of keywords. Each {slot} is replaced by that slot's
@@ -83,9 +85,14 @@ TAG_KEYWORDS = {
 }
 
 
+def _has_word(text, word):
+    # Whole words only, so "oak" does not match "soak" and "pine" not "alpine".
+    return re.search(rf"(?<![\w-]){re.escape(word)}(?![\w-])", text) is not None
+
+
 def derive_tags(prompt_text):
     text = prompt_text.lower()
-    tags = [tag for tag, words in TAG_KEYWORDS.items() if any(w in text for w in words)]
+    tags = [tag for tag, words in TAG_KEYWORDS.items() if any(_has_word(text, w) for w in words)]
     return tags + ["AI Art"]
 
 
@@ -251,6 +258,43 @@ def choose_title(manifest):
 # --------------------------------------------------------------------------- generation
 
 
+class NoImageError(RuntimeError):
+    """The model answered but sent no image."""
+
+
+# HTTP status codes worth retrying: timeouts, rate limits and server errors.
+RETRYABLE_STATUS = {408, 429, 500, 502, 503, 504}
+# Exception class names that mean the request never got a clean answer (network trouble).
+NETWORK_ERROR_NAMES = (
+    "Timeout", "TimeoutError", "ConnectError", "ConnectionError", "ReadError",
+    "WriteError", "RemoteProtocolError", "NetworkError", "TransportError", "ProtocolError",
+)
+
+
+def _status_code(exc):
+    """The HTTP status of an API error, if it carries one (google.genai.errors.APIError
+    has .code; some clients use .status_code)."""
+    for attr in ("code", "status_code"):
+        value = getattr(exc, attr, None)
+        if isinstance(value, int):
+            return value
+    return None
+
+
+def is_retryable(exc):
+    """True for errors a retry may fix: timeouts, 429, 5xx and network failures.
+    False for other 4xx (bad key, unknown model, blocked prompt) and anything unknown."""
+    if isinstance(exc, NoImageError):
+        return True  # the model sometimes answers with text only; a new attempt can work
+    code = _status_code(exc)
+    if code is not None:
+        return code in RETRYABLE_STATUS or 500 <= code < 600
+    if isinstance(exc, (TimeoutError, ConnectionError)):
+        return True
+    names = {cls.__name__ for cls in type(exc).__mro__}
+    return any(n.endswith(NETWORK_ERROR_NAMES) for n in names)
+
+
 def request_image(client, prompt_text, seed):
     """Call the model, retrying with backoff. Returns (bytes, mime_type)."""
     from google.genai import types
@@ -272,10 +316,12 @@ def request_image(client, prompt_text, seed):
                 if inline and inline.data:
                     return inline.data, (inline.mime_type or "image/png")
             feedback = getattr(response, "prompt_feedback", None)
-            raise RuntimeError(f"No image data in response (feedback: {feedback})")
-        except Exception as exc:  # noqa: BLE001 - retried, then re-raised
+            raise NoImageError(f"No image data in response (feedback: {feedback})")
+        except Exception as exc:  # noqa: BLE001 - retried only if transient
             last_error = exc
-            print(f"   attempt {attempt}/{MAX_ATTEMPTS} failed: {exc}")
+            print(f"   attempt {attempt}/{MAX_ATTEMPTS} failed: {type(exc).__name__}: {exc}")
+            if not is_retryable(exc):
+                raise RuntimeError(f"Image generation failed (not retryable): {exc}") from exc
             if attempt < MAX_ATTEMPTS:
                 time.sleep(2 ** attempt)
     raise RuntimeError(f"Image generation failed after {MAX_ATTEMPTS} attempts: {last_error}")
@@ -303,13 +349,15 @@ def load_manifest():
         with open(MANIFEST_PATH, "r", encoding="utf-8") as f:
             data = json.load(f)
     except json.JSONDecodeError as exc:
+        # Copy, never move: a missing manifest would be read as an empty archive on the
+        # next run and overwrite the whole gallery with a single piece.
         backup = MANIFEST_PATH.with_name(
-            f"manifest.corrupt-{datetime.now().strftime('%Y%m%d-%H%M%S')}.json"
+            f"manifest.corrupt-{datetime.now(timezone.utc).strftime('%Y%m%d-%H%M%S')}.json"
         )
-        os.replace(MANIFEST_PATH, backup)
+        shutil.copy2(MANIFEST_PATH, backup)
         raise SystemExit(
-            f"manifest.json is not valid JSON ({exc}). Moved it to {backup}; "
-            "fix or restore it, then run again."
+            f"manifest.json is not valid JSON ({exc}). Left it in place and saved a copy "
+            f"to {backup}; fix or restore it, then run again."
         )
     if not isinstance(data, list):
         raise SystemExit("manifest.json must contain a JSON list. Aborting without changes.")
@@ -347,7 +395,7 @@ def generate_art_piece():
 
     theme, variables, prompt_text = choose_prompt(manifest, vocab)
     seed = random.randint(100000, 999999)
-    now = datetime.now()
+    now = datetime.now(timezone.utc)  # UTC, so ids and dates match wherever this runs
     date_str = now.strftime("%Y-%m-%d")
     timestamp_id = now.strftime("%Y%m%d-%H%M%S")
 
@@ -363,7 +411,7 @@ def generate_art_piece():
     print(f"-> Saved image to {OUTPUT_DIR / filename}")
 
     webp_name = f"buddha-{timestamp_id}.webp"
-    has_thumb = save_webp(image_bytes, THUMB_DIR / webp_name, THUMB_SIZE, 80)
+    has_thumb = save_webp(image_bytes, THUMB_DIR / webp_name, THUMB_SIZE, THUMB_QUALITY)
     has_display = save_webp(image_bytes, DISPLAY_DIR / webp_name, DISPLAY_SIZE, DISPLAY_QUALITY)
 
     # URLs are relative (no leading slash) so the site also works under a subpath.
