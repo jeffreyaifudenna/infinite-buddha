@@ -1,5 +1,31 @@
 [
   {
+    "id": "buddha-20261029-090920",
+    "title": "Peaceful Valley #513",
+    "imageUrl": "output/buddha-20261029-090920.jpg",
+    "prompt": "A fine art photograph with subtle film grain of a crystalline prismatic glass Buddha seated in meditation with hands resting in the lap, inside a bioluminescent crystal cavern threaded with pulsing ley lines at dusk with dust motes suspended in the light. Lit by warm rim lighting. Sharp focus with fine detail throughout.",
+    "theme": "cosmic",
+    "variables": {
+      "material": "crystalline prismatic glass",
+      "pose": "seated in meditation with hands resting in the lap",
+      "place": "inside a bioluminescent crystal cavern threaded with pulsing ley lines",
+      "time": "at dusk",
+      "atmosphere": "with dust motes suspended in the light",
+      "medium": "fine art photograph with subtle film grain",
+      "lighting": "warm rim lighting",
+      "finish": "sharp focus with fine detail throughout"
+    },
+    "seed": 353827,
+    "date": "2026-10-29",
+    "tags": [
+      "Sacred Geometry",
+      "Soft Light",
+      "AI Art"
+    ],
+    "thumbUrl": "output/thumbs/buddha-20261029-090920.webp",
+    "displayUrl": "output/display/buddha-20261029-090920.webp"
+  },
+  {
     "id": "buddha-20261028-090736",
     "title": "Whispering Pines #582",
     "imageUrl": "output/buddha-20261028-090736.jpg",
