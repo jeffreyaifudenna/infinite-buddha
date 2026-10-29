@@ -35,6 +35,7 @@ THUMB_SIZE = 640
 DISPLAY_SIZE = 1600  # cap only; current images are ~1024px, so they keep full resolution
 DISPLAY_QUALITY = 85  # ~200 KB vs ~1 MB for the original JPG
 THUMB_QUALITY = 80
+JPEG_QUALITY = 80  # ~200 KB at 1024px; only used for link previews and as a fallback
 
 # How the chosen words become one prompt: a short descriptive paragraph, which image
 # models follow better than a list of keywords. Each {slot} is replaced by that slot's
@@ -342,6 +343,20 @@ def save_webp(image_bytes, out_path, max_size, quality):
         return False
 
 
+def save_jpeg(image_bytes, out_path, quality):
+    """Write a compact JPG (used for link previews and as a fallback). Returns True on
+    success. ~200 KB instead of the ~1 MB the model returns, at the same resolution."""
+    from PIL import Image
+
+    try:
+        with Image.open(io.BytesIO(image_bytes)) as img:
+            img.convert("RGB").save(out_path, "JPEG", quality=quality, optimize=True, progressive=True)
+        return True
+    except Exception as exc:  # noqa: BLE001 - caller falls back to the raw bytes
+        print(f"   warning: could not re-encode {out_path.name}: {exc}")
+        return False
+
+
 def load_manifest():
     if not MANIFEST_PATH.exists():
         return []
@@ -404,10 +419,12 @@ def generate_art_piece():
     print(f"-> Seed: {seed}")
 
     image_bytes, mime = request_image(client, prompt_text, seed)
-    ext = MIME_TO_EXT.get(mime, "png")
-
-    filename = f"buddha-{timestamp_id}.{ext}"
-    (OUTPUT_DIR / filename).write_bytes(image_bytes)
+    # Store a compact JPG rather than the model's full-size original: visitors see the
+    # WebP copies, so the JPG only serves link previews. Keeps the repo from ballooning.
+    filename = f"buddha-{timestamp_id}.jpg"
+    if not save_jpeg(image_bytes, OUTPUT_DIR / filename, JPEG_QUALITY):
+        filename = f"buddha-{timestamp_id}.{MIME_TO_EXT.get(mime, 'png')}"
+        (OUTPUT_DIR / filename).write_bytes(image_bytes)
     print(f"-> Saved image to {OUTPUT_DIR / filename}")
 
     webp_name = f"buddha-{timestamp_id}.webp"
