@@ -19,24 +19,76 @@ const siteUrl = () => {
 const escapeHtml = (s) =>
   String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c])
 
-const metaTags = ({ title, description, pagePath, imagePath, base }) => {
+// Shorten text for a meta description, cutting at a word boundary.
+const shorten = (text, max = 160) => {
+  const s = String(text || "").replace(/\s+/g, " ").trim()
+  if (s.length <= max) return s
+  const cut = s.slice(0, max - 1)
+  const space = cut.lastIndexOf(" ")
+  return `${(space > max * 0.6 ? cut.slice(0, space) : cut).replace(/[\s,.;:]+$/, "")}…`
+}
+
+// Pixel size of a JPEG, PNG or WebP file, read from its header; null if unknown.
+const imageSize = (file) => {
+  let b
+  try {
+    b = fs.readFileSync(file)
+  } catch {
+    return null
+  }
+  if (b.length > 24 && b.readUInt32BE(0) === 0x89504e47) return { width: b.readUInt32BE(16), height: b.readUInt32BE(20) }
+  if (b.length > 30 && b.toString("ascii", 0, 4) === "RIFF" && b.toString("ascii", 8, 12) === "WEBP") {
+    const kind = b.toString("ascii", 12, 16)
+    if (kind === "VP8X") return { width: 1 + b.readUIntLE(24, 3), height: 1 + b.readUIntLE(27, 3) }
+    if (kind === "VP8 ") return { width: b.readUInt16LE(26) & 0x3fff, height: b.readUInt16LE(28) & 0x3fff }
+    if (kind === "VP8L") {
+      const bits = b.readUInt32LE(21)
+      return { width: (bits & 0x3fff) + 1, height: ((bits >> 14) & 0x3fff) + 1 }
+    }
+    return null
+  }
+  if (b[0] === 0xff && b[1] === 0xd8) {
+    let i = 2
+    while (i + 9 < b.length) {
+      if (b[i] !== 0xff) return null
+      const marker = b[i + 1]
+      const len = b.readUInt16BE(i + 2)
+      // SOF0-SOF15 hold the frame size (C4 = DHT, C8 = JPG, CC = DAC are not frames).
+      if (marker >= 0xc0 && marker <= 0xcf && ![0xc4, 0xc8, 0xcc].includes(marker)) {
+        return { width: b.readUInt16BE(i + 7), height: b.readUInt16BE(i + 5) }
+      }
+      i += 2 + len
+    }
+  }
+  return null
+}
+
+const metaTags = ({ title, description, pagePath, imagePath, imageAlt, imageDims, base }) => {
   const abs = (p) => (base ? new URL(String(p).replace(/^\/+/, ""), base).href : null)
+  const image = imagePath && abs(imagePath)
   const tags = [
     ["property", "og:site_name", SITE_NAME],
     ["property", "og:type", "website"],
     ["property", "og:title", title],
     ["property", "og:description", description],
     ["property", "og:url", abs(pagePath)],
-    ["property", "og:image", imagePath && abs(imagePath)],
+    ["property", "og:image", image],
+    ["property", "og:image:width", image && imageDims?.width],
+    ["property", "og:image:height", image && imageDims?.height],
+    ["property", "og:image:alt", image && imageAlt],
     ["name", "twitter:card", "summary_large_image"],
     ["name", "twitter:title", title],
     ["name", "twitter:description", description],
-    ["name", "twitter:image", imagePath && abs(imagePath)],
+    ["name", "twitter:image", image],
+    ["name", "twitter:image:alt", image && imageAlt],
   ]
-  return tags
-    .filter(([, , value]) => value)
-    .map(([attr, key, value]) => `    <meta ${attr}="${key}" content="${escapeHtml(value)}" />`)
-    .join("\n")
+  const canonical = abs(pagePath)
+  return [
+    ...(canonical ? [`    <link rel="canonical" href="${escapeHtml(canonical)}" />`] : []),
+    ...tags
+      .filter(([, , value]) => value)
+      .map(([attr, key, value]) => `    <meta ${attr}="${key}" content="${escapeHtml(value)}" />`),
+  ].join("\n")
 }
 
 // After the build, add link-preview tags to index.html and write one copy of it per
@@ -69,16 +121,28 @@ function sharePages() {
           : ""
       }
 
-      const withMeta = (page, { title, description, pagePath, imagePath, preload }) =>
+      const dimsOf = (p) => (p ? imageSize(path.join(outDir, String(p).replace(/^\/+/, ""))) : null)
+      const altOf = (art) => shorten(art?.prompt ? `${art.title}: ${art.prompt}` : art?.title, 200)
+
+      const withMeta = (page, { title, description, pagePath, imagePath, imageAlt, preload }) =>
+        // Function replacers, so "$&" or "$'" inside a prompt is inserted literally.
         page
-          .replace(/<title>[\s\S]*?<\/title>/, `<title>${escapeHtml(title)}</title>`)
+          .replace(/<title>[\s\S]*?<\/title>/, () => `<title>${escapeHtml(title)}</title>`)
           .replace(
             /<meta name="description"[^>]*>/,
-            `<meta name="description" content="${escapeHtml(description)}" />`
+            () => `<meta name="description" content="${escapeHtml(description)}" />`
           )
           .replace(
             /\s*<\/head>/,
-            `${preloadTag(preload)}\n${metaTags({ title, description, pagePath, imagePath, base })}\n  </head>`
+            () => `${preloadTag(preload)}\n${metaTags({
+              title,
+              description,
+              pagePath,
+              imagePath,
+              imageAlt,
+              imageDims: dimsOf(imagePath),
+              base,
+            })}\n  </head>`
           )
 
       const latest = Array.isArray(manifest) ? manifest[0] : null
@@ -89,6 +153,7 @@ function sharePages() {
           description: SITE_DESCRIPTION,
           pagePath: "",
           imagePath: latest?.imageUrl,
+          imageAlt: latest && altOf(latest),
           preload: latest,
         })
       )
@@ -100,9 +165,10 @@ function sharePages() {
           path.join(outDir, `${art.id}.html`),
           withMeta(html, {
             title: `${art.title} · ${SITE_NAME}`,
-            description: SITE_DESCRIPTION,
+            description: art.prompt ? shorten(art.prompt) : SITE_DESCRIPTION,
             pagePath: art.id,
             imagePath: art.imageUrl,
+            imageAlt: altOf(art),
             preload: art,
           })
         )

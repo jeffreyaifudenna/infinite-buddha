@@ -9,3 +9,4 @@ venv/
 manifest.corrupt-*.json
 *.json.tmp
 .DS_Store
+*.code-workspace

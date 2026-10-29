@@ -39,11 +39,8 @@ const formatDate = (d) => {
   });
 };
 
-const todayKey = () => {
-  const n = new Date();
-  const p = (x) => String(x).padStart(2, "0");
-  return `${n.getFullYear()}-${p(n.getMonth() + 1)}-${p(n.getDate())}`;
-};
+// Today's date in UTC, the same calendar the generator uses for manifest dates.
+const todayKey = () => new Date().toISOString().slice(0, 10);
 
 function DateBadge({ date, className = "" }) {
   const label = formatDate(date);
@@ -93,6 +90,7 @@ export default function App() {
   const closeBtnRef = useRef(null);
   const lastFocusedRef = useRef(null);
   const touchStartRef = useRef(null);
+  const copyTimersRef = useRef({});
 
   const modalOpen = Boolean(selectedArt) || isAboutOpen;
 
@@ -231,14 +229,22 @@ export default function App() {
     }
   };
 
-  const copyText = async (text, setState) => {
+  // Clear any pending "reset the button label" timers when the app unmounts.
+  useEffect(() => {
+    const timers = copyTimersRef.current;
+    return () => Object.values(timers).forEach(clearTimeout);
+  }, []);
+
+  const copyText = async (text, setState, timerKey) => {
     try {
       await navigator.clipboard.writeText(text);
       setState("copied");
     } catch {
       setState("failed");
     }
-    setTimeout(() => setState("idle"), 2000);
+    // Restart the timer on each click, so rapid clicks do not flicker the label.
+    clearTimeout(copyTimersRef.current[timerKey]);
+    copyTimersRef.current[timerKey] = setTimeout(() => setState("idle"), 2000);
   };
 
   // Phones get the native share sheet; desktops copy the link.
@@ -252,12 +258,15 @@ export default function App() {
       }
       return;
     }
-    copyText(url, setLinkState);
+    copyText(url, setLinkState, "link");
   };
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-buddha-dark flex items-center justify-center text-gray-400 font-mono text-sm tracking-widest">
+      <div
+        role="status"
+        className="min-h-screen bg-buddha-dark flex items-center justify-center text-gray-400 font-mono text-sm tracking-widest"
+      >
         LOADING SANCTUARY...
       </div>
     );
@@ -361,6 +370,12 @@ export default function App() {
               >
                 <img
                   src={resolveUrl(art.thumbUrl || art.imageUrl)}
+                  srcSet={
+                    art.thumbUrl && art.displayUrl
+                      ? `${resolveUrl(art.thumbUrl)} 640w, ${resolveUrl(art.displayUrl)} 1024w`
+                      : undefined
+                  }
+                  sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
                   alt={altText(art)}
                   loading="lazy"
                   decoding="async"
@@ -433,11 +448,11 @@ export default function App() {
             <div className="p-8 flex flex-col justify-between space-y-6">
               <div className="space-y-4">
                 <div>
-                  <h4 className="text-xs font-mono uppercase tracking-wider text-gray-500 mb-1">Title</h4>
+                  <h2 className="text-xs font-mono uppercase tracking-wider text-gray-400 mb-1">Title</h2>
                   <p className="text-gray-100 text-lg font-serif">{selectedArt.title}</p>
                 </div>
                 <div>
-                  <h4 className="text-xs font-mono uppercase tracking-wider text-gray-500 mb-1">Generation Prompt</h4>
+                  <h2 className="text-xs font-mono uppercase tracking-wider text-gray-400 mb-1">Generation Prompt</h2>
                   <p className="text-gray-300 text-xs font-mono bg-buddha-dark p-3 rounded-lg border border-[#1f232d] leading-relaxed max-h-40 overflow-y-auto">
                     {selectedArt.prompt}
                   </p>
@@ -465,7 +480,7 @@ export default function App() {
                 </button>
                 <button
                   type="button"
-                  onClick={() => copyText(selectedArt.prompt, setCopyState)}
+                  onClick={() => copyText(selectedArt.prompt, setCopyState, "prompt")}
                   className="w-full py-3 px-4 bg-[#1f232d] hover:bg-[#272b36] text-gray-200 text-xs font-mono tracking-wider uppercase rounded-lg transition-colors flex items-center justify-center space-x-2 border border-[#272b36]"
                 >
                   <span>{copyLabel}</span>
@@ -500,11 +515,11 @@ export default function App() {
             </button>
 
             <div className="space-y-2">
-              <h3 className="text-xl font-serif text-gray-100 tracking-wide">About The Infinite Buddha</h3>
+              <h2 className="text-xl font-serif text-gray-100 tracking-wide">About The Infinite Buddha</h2>
               <p className="text-xs font-mono text-buddha-gold tracking-widest uppercase">A new Buddha Everyday</p>
             </div>
 
-                        <p className="text-sm text-gray-300 font-light leading-relaxed">
+            <p className="text-sm text-gray-300 font-light leading-relaxed">
               The Infinite Buddha is a generative art project by JeffreyAiFudenna. Every night, a script combines a randomly chosen subject, setting and style into a prompt, and Google's Gemini AI renders a new Buddha. No two are alike.
             </p>
             <p className="text-sm text-gray-300 font-light leading-relaxed">
@@ -525,14 +540,14 @@ export default function App() {
       )}
 
       {/* Footer */}
-        <footer className="w-full py-12 px-6 border-t border-[#1f232d] text-xs font-mono text-gray-500">
+      <footer className="w-full py-12 px-6 border-t border-[#1f232d] text-xs font-mono text-gray-400">
         <div className="max-w-7xl mx-auto text-center">
           A New Buddha Everyday since October 14, 2026 ·{" "}
           <a
             href="https://github.com/jeffreyaifudenna/infinite-buddha"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-gray-400 underline decoration-[#272b36] underline-offset-4 hover:text-buddha-gold hover:decoration-buddha-gold transition-colors"
+            className="text-gray-300 underline decoration-[#272b36] underline-offset-4 hover:text-buddha-gold hover:decoration-buddha-gold transition-colors"
           >
             Open Source
           </a>
@@ -541,7 +556,7 @@ export default function App() {
             href="https://jeffrey-ai-portfolio.vercel.app/"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-gray-400 underline decoration-[#272b36] underline-offset-4 hover:text-buddha-gold hover:decoration-buddha-gold transition-colors"
+            className="text-gray-300 underline decoration-[#272b36] underline-offset-4 hover:text-buddha-gold hover:decoration-buddha-gold transition-colors"
           >
             Jeffrey-Ai-Portfolio
           </a>
