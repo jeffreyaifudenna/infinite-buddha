@@ -1,5 +1,31 @@
 [
   {
+    "id": "buddha-20261030-090857",
+    "title": "Timeless Solitude #131",
+    "imageUrl": "output/buddha-20261030-090857.jpg",
+    "prompt": "A cinematic digital painting of a translucent glass Buddha shown as a head only with a serene downcast gaze, on a mirror-flat salt pan reflecting a pale aurora in the golden hour. Richly detailed down to the smallest surface.",
+    "theme": "cosmic",
+    "variables": {
+      "material": "translucent glass",
+      "pose": "shown as a head only",
+      "expression": "with a serene downcast gaze",
+      "place": "on a mirror-flat salt pan reflecting a pale aurora",
+      "time": "in the golden hour",
+      "medium": "cinematic digital painting",
+      "finish": "richly detailed down to the smallest surface"
+    },
+    "seed": 436648,
+    "date": "2026-10-30",
+    "tags": [
+      "Serenity",
+      "Soft Light",
+      "Painted",
+      "AI Art"
+    ],
+    "thumbUrl": "output/thumbs/buddha-20261030-090857.webp",
+    "displayUrl": "output/display/buddha-20261030-090857.webp"
+  },
+  {
     "id": "buddha-20261029-090920",
     "title": "Peaceful Valley #513",
     "imageUrl": "output/buddha-20261029-090920.jpg",
