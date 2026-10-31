@@ -2,9 +2,11 @@
 
 A new Buddha Daily.
 
-Project by Jeffrey Fudenna, learning to use AI.
+**Live site:** https://www.theinfinitebuddha.xyz
 
-Open Source!
+Project by Jeffrey Fudenna, learning to use AI. Built with Claude Code.
+
+Open source under the MIT License.
 
 ## How a Buddha is made
 
@@ -25,3 +27,7 @@ step in `.github/workflows/generate_art.yml`):
 ```bash
 BUDDHA_MODEL=some-other-image-model python generate_buddha.py
 ```
+
+## License
+
+MIT License. See [LICENSE](LICENSE). Free to use, change and share.
