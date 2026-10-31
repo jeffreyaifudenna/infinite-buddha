@@ -1,4 +1,4 @@
-The Infinite Buddha
+# The Infinite Buddha
 
 A new Buddha Daily.
 
