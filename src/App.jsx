@@ -294,7 +294,7 @@ export default function App() {
   const hasNewer = selectedIndex > 0;
   const hasOlder = selectedIndex >= 0 && selectedIndex < artworks.length - 1;
   const navBtnClass =
-    "absolute top-1/2 -translate-y-1/2 z-20 bg-black/60 hover:bg-black/80 backdrop-blur-sm text-gray-200 hover:text-buddha-gold p-2 rounded-full border border-[#272b36] transition-colors";
+    "absolute top-1/2 -translate-y-1/2 z-20 bg-black/60 hover:bg-black/80 backdrop-blur-sm text-gray-200 hover:text-buddha-gold p-3 rounded-full border border-[#272b36] transition-colors";
 
   return (
     <div className="min-h-screen bg-buddha-dark text-gray-100 flex flex-col selection:bg-buddha-gold selection:text-black">
@@ -509,7 +509,7 @@ export default function App() {
               ref={closeBtnRef}
               onClick={() => setIsAboutOpen(false)}
               aria-label="Close"
-              className="absolute top-4 right-4 z-20 bg-[#1f232d] hover:bg-[#272b36] text-gray-300 p-2 rounded-full transition-colors"
+              className="absolute top-4 right-4 z-20 bg-[#1f232d] hover:bg-[#272b36] text-gray-300 p-3 rounded-full transition-colors"
             >
               <CloseIcon />
             </button>
