@@ -1,5 +1,31 @@
 [
   {
+    "id": "buddha-20261031-085802",
+    "title": "Rooted Harmony #720",
+    "imageUrl": "output/buddha-20261031-085802.jpg",
+    "prompt": "A documentary photograph with natural colors of a moss-covered stone Buddha shown as a pair of hands resting in the meditation gesture, within a minimalist wooden sanctuary overlooking a meadow under a full moon, with small lit candles arranged before it. Lit by shafts of light through volumetric haze. Shot on a 35mm lens with shallow depth of field. Every surface shows fine, crisp texture.",
+    "theme": "organic",
+    "variables": {
+      "material": "moss-covered stone",
+      "pose": "shown as a pair of hands resting in the meditation gesture",
+      "place": "within a minimalist wooden sanctuary overlooking a meadow",
+      "time": "under a full moon",
+      "companions": "with small lit candles arranged before it",
+      "medium": "documentary photograph with natural colors",
+      "lighting": "shafts of light through volumetric haze",
+      "camera": "shot on a 35mm lens with shallow depth of field",
+      "finish": "every surface shows fine, crisp texture"
+    },
+    "seed": 947396,
+    "date": "2026-10-31",
+    "tags": [
+      "Grounded Nature",
+      "AI Art"
+    ],
+    "thumbUrl": "output/thumbs/buddha-20261031-085802.webp",
+    "displayUrl": "output/display/buddha-20261031-085802.webp"
+  },
+  {
     "id": "buddha-20261030-090857",
     "title": "Timeless Solitude #131",
     "imageUrl": "output/buddha-20261030-090857.jpg",
