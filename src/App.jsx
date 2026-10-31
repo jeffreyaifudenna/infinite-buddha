@@ -182,12 +182,19 @@ export default function App() {
   }, [modalOpen]);
 
   // Keep the address bar pointing at the open piece, so it can be copied or bookmarked.
+  // Skipped when the manifest failed to load, so a shared piece link survives a reload.
   useEffect(() => {
-    if (loading) return;
+    if (loading || error) return;
     const url = selectedArt ? pieceUrl(selectedArt.id) : siteRoot().href;
     if (url !== window.location.href) window.history.replaceState(null, "", url);
     document.title = selectedArt ? `${selectedArt.title} · ${SITE_TITLE}` : `${SITE_TITLE} | Generative Art Feed`;
-  }, [selectedArt, loading]);
+  }, [selectedArt, loading, error]);
+
+  // Stepping to the first or last piece removes the Newer/Older button that had focus;
+  // move focus back into the dialog so keyboard users are not dropped onto the page.
+  useEffect(() => {
+    if (selectedArt && document.activeElement === document.body) closeBtnRef.current?.focus();
+  }, [selectedArt]);
 
   // Move through the archive from inside the modal. Artworks are newest first,
   // so +1 is the older piece (to the right in the grid) and -1 the newer one.
@@ -516,7 +523,7 @@ export default function App() {
 
             <div className="space-y-2">
               <h2 className="text-xl font-serif text-gray-100 tracking-wide">About The Infinite Buddha</h2>
-              <p className="text-xs font-mono text-buddha-gold tracking-widest uppercase">A new Buddha Everyday</p>
+              <p className="text-xs font-mono text-buddha-gold tracking-widest uppercase">A new Buddha Every Day</p>
             </div>
 
             <p className="text-sm text-gray-300 font-light leading-relaxed">
@@ -542,7 +549,7 @@ export default function App() {
       {/* Footer */}
       <footer className="w-full py-12 px-6 border-t border-[#1f232d] text-xs font-mono text-gray-400">
         <div className="max-w-7xl mx-auto text-center">
-          A New Buddha Everyday since October 14, 2026 ·{" "}
+          A New Buddha Every Day since October 14, 2026 ·{" "}
           <a
             href="https://github.com/jeffreyaifudenna/infinite-buddha"
             target="_blank"
