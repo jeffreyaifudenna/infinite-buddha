@@ -1,5 +1,34 @@
 [
   {
+    "id": "buddha-20261101-090218",
+    "title": "Inner Calm #400",
+    "imageUrl": "output/buddha-20261101-090218.jpg",
+    "prompt": "A woodblock print of a dark walnut Buddha carved in relief, in a serene zen rock garden of raked white gravel under an overcast midday sky among falling cherry blossoms. Lit by the gentle glow of candlelight. A palette of black and gold. Subtle, lifelike detail throughout.",
+    "theme": "organic",
+    "variables": {
+      "material": "dark walnut",
+      "pose": "carved in relief",
+      "place": "in a serene zen rock garden of raked white gravel",
+      "time": "under an overcast midday sky",
+      "atmosphere": "among falling cherry blossoms",
+      "medium": "woodblock print",
+      "lighting": "the gentle glow of candlelight",
+      "palette": "black and gold",
+      "finish": "subtle, lifelike detail throughout"
+    },
+    "seed": 325989,
+    "date": "2026-11-01",
+    "tags": [
+      "Serenity",
+      "Grounded Nature",
+      "Hand-Crafted",
+      "Painted",
+      "AI Art"
+    ],
+    "thumbUrl": "output/thumbs/buddha-20261101-090218.webp",
+    "displayUrl": "output/display/buddha-20261101-090218.webp"
+  },
+  {
     "id": "buddha-20261031-085802",
     "title": "Rooted Harmony #720",
     "imageUrl": "output/buddha-20261031-085802.jpg",
