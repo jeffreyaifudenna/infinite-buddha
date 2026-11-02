@@ -1,5 +1,34 @@
 [
   {
+    "id": "buddha-20261102-092505",
+    "title": "Quiet Waters #469",
+    "imageUrl": "output/buddha-20261102-092505.jpg",
+    "prompt": "An ink wash painting of a monumental contemporary minimalist weathered teak Buddha reclining on one side, inside a humble wooden tea pavilion with open windows framing a garden at dawn. Lit by soft diffused natural light. A palette of warm amber and umber. Sharp focus with fine detail throughout.",
+    "theme": "organic",
+    "variables": {
+      "material": "weathered teak",
+      "pose": "reclining on one side",
+      "scale": "monumental",
+      "lineage": "contemporary minimalist",
+      "place": "inside a humble wooden tea pavilion with open windows framing a garden",
+      "time": "at dawn",
+      "medium": "ink wash painting",
+      "lighting": "soft diffused natural light",
+      "palette": "warm amber and umber",
+      "finish": "sharp focus with fine detail throughout"
+    },
+    "seed": 249184,
+    "date": "2026-11-02",
+    "tags": [
+      "Grounded Nature",
+      "Soft Light",
+      "Painted",
+      "AI Art"
+    ],
+    "thumbUrl": "output/thumbs/buddha-20261102-092505.webp",
+    "displayUrl": "output/display/buddha-20261102-092505.webp"
+  },
+  {
     "id": "buddha-20261101-090218",
     "title": "Inner Calm #400",
     "imageUrl": "output/buddha-20261101-090218.jpg",
