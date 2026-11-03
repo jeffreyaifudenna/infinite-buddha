@@ -1,5 +1,35 @@
 [
   {
+    "id": "buddha-20261103-090912",
+    "title": "Quiet Horizon #629",
+    "imageUrl": "output/buddha-20261103-090912.jpg",
+    "prompt": "A watercolor on textured paper of a towering hand-hewn granite Buddha seated with one hand touching the earth with a gentle half-smile, on a quiet hillside overlooking a green valley in the blue hour before sunrise as light rain falls. Lit by dramatic chiaroscuro with deep shadows. Richly detailed down to the smallest surface.",
+    "theme": "organic",
+    "variables": {
+      "material": "hand-hewn granite",
+      "pose": "seated with one hand touching the earth",
+      "expression": "with a gentle half-smile",
+      "scale": "towering",
+      "place": "on a quiet hillside overlooking a green valley",
+      "time": "in the blue hour before sunrise",
+      "atmosphere": "as light rain falls",
+      "medium": "watercolor on textured paper",
+      "lighting": "dramatic chiaroscuro with deep shadows",
+      "finish": "richly detailed down to the smallest surface"
+    },
+    "seed": 665047,
+    "date": "2026-11-03",
+    "tags": [
+      "Serenity",
+      "Grounded Nature",
+      "Hand-Crafted",
+      "Painted",
+      "AI Art"
+    ],
+    "thumbUrl": "output/thumbs/buddha-20261103-090912.webp",
+    "displayUrl": "output/display/buddha-20261103-090912.webp"
+  },
+  {
     "id": "buddha-20261102-092505",
     "title": "Quiet Waters #469",
     "imageUrl": "output/buddha-20261102-092505.jpg",
