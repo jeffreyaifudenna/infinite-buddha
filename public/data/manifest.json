@@ -1,5 +1,33 @@
 [
   {
+    "id": "buddha-20261104-091455",
+    "title": "Simple Life #697",
+    "imageUrl": "output/buddha-20261104-091455.jpg",
+    "prompt": "A photorealistic photograph of a carved cedar Buddha walking with quiet, deliberate steps, on a high mountain overlook above drifting clouds at twilight in gently falling snow. Lit by cool overcast light. A close macro view of the face. Every surface shows fine, crisp texture.",
+    "theme": "organic",
+    "variables": {
+      "material": "carved cedar",
+      "pose": "walking with quiet, deliberate steps",
+      "place": "on a high mountain overlook above drifting clouds",
+      "time": "at twilight",
+      "atmosphere": "in gently falling snow",
+      "medium": "photorealistic photograph",
+      "lighting": "cool overcast light",
+      "camera": "a close macro view of the face",
+      "finish": "every surface shows fine, crisp texture"
+    },
+    "seed": 227221,
+    "date": "2026-11-04",
+    "tags": [
+      "Serenity",
+      "Grounded Nature",
+      "Hand-Crafted",
+      "AI Art"
+    ],
+    "thumbUrl": "output/thumbs/buddha-20261104-091455.webp",
+    "displayUrl": "output/display/buddha-20261104-091455.webp"
+  },
+  {
     "id": "buddha-20261103-090912",
     "title": "Quiet Horizon #629",
     "imageUrl": "output/buddha-20261103-090912.jpg",
