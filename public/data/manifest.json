@@ -1,5 +1,30 @@
 [
   {
+    "id": "buddha-20261105-092012",
+    "title": "Gentle Awakening #531",
+    "imageUrl": "output/buddha-20261105-092012.jpg",
+    "prompt": "An oil painting on canvas of a hand-carved sandstone Buddha seated in lotus position, under a canopy of golden maple leaves, with a single flower laid before it. Subtle, lifelike detail throughout.",
+    "theme": "organic",
+    "variables": {
+      "material": "hand-carved sandstone",
+      "pose": "seated in lotus position",
+      "place": "under a canopy of golden maple leaves",
+      "companions": "with a single flower laid before it",
+      "medium": "oil painting on canvas",
+      "finish": "subtle, lifelike detail throughout"
+    },
+    "seed": 498786,
+    "date": "2026-11-05",
+    "tags": [
+      "Grounded Nature",
+      "Hand-Crafted",
+      "Painted",
+      "AI Art"
+    ],
+    "thumbUrl": "output/thumbs/buddha-20261105-092012.webp",
+    "displayUrl": "output/display/buddha-20261105-092012.webp"
+  },
+  {
     "id": "buddha-20261104-091455",
     "title": "Simple Life #697",
     "imageUrl": "output/buddha-20261104-091455.jpg",
