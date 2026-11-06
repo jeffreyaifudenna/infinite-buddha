@@ -1,5 +1,35 @@
 [
   {
+    "id": "buddha-20261106-091412",
+    "title": "Humble Path #537",
+    "imageUrl": "output/buddha-20261106-091412.jpg",
+    "prompt": "An editorial nature photograph of a palm-sized weathered limestone Buddha shown as a bust, head and shoulders only with an understated knowing smile, on a weathered wooden dock over a glassy lake in the late afternoon in clear still air. Lit by dappled light filtering through leaves. A palette of near-monochrome greys with a single warm accent. Seen from directly overhead. Sharp focus with fine detail throughout.",
+    "theme": "organic",
+    "variables": {
+      "material": "weathered limestone",
+      "pose": "shown as a bust, head and shoulders only",
+      "expression": "with an understated knowing smile",
+      "scale": "palm-sized",
+      "place": "on a weathered wooden dock over a glassy lake",
+      "time": "in the late afternoon",
+      "atmosphere": "in clear still air",
+      "medium": "editorial nature photograph",
+      "lighting": "dappled light filtering through leaves",
+      "palette": "near-monochrome greys with a single warm accent",
+      "camera": "seen from directly overhead",
+      "finish": "sharp focus with fine detail throughout"
+    },
+    "seed": 575238,
+    "date": "2026-11-06",
+    "tags": [
+      "Grounded Nature",
+      "Soft Light",
+      "AI Art"
+    ],
+    "thumbUrl": "output/thumbs/buddha-20261106-091412.webp",
+    "displayUrl": "output/display/buddha-20261106-091412.webp"
+  },
+  {
     "id": "buddha-20261105-092012",
     "title": "Gentle Awakening #531",
     "imageUrl": "output/buddha-20261105-092012.jpg",
