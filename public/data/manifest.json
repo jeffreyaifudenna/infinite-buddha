@@ -1,5 +1,33 @@
 [
   {
+    "id": "buddha-20261107-090616",
+    "title": "Quantum Silence #515",
+    "imageUrl": "output/buddha-20261107-090616.jpg",
+    "prompt": "A documentary photograph with natural colors of a Khmer matte ceramic Buddha standing with one hand raised in a gesture of reassurance, within a peaceful earthen hermitage among rolling hills in soft drifting mist. Lit by warm rim lighting. Richly detailed down to the smallest surface.",
+    "theme": "organic",
+    "variables": {
+      "material": "matte ceramic",
+      "pose": "standing with one hand raised in a gesture of reassurance",
+      "lineage": "Khmer",
+      "place": "within a peaceful earthen hermitage among rolling hills",
+      "atmosphere": "in soft drifting mist",
+      "medium": "documentary photograph with natural colors",
+      "lighting": "warm rim lighting",
+      "finish": "richly detailed down to the smallest surface"
+    },
+    "seed": 891972,
+    "date": "2026-11-07",
+    "tags": [
+      "Serenity",
+      "Grounded Nature",
+      "Hand-Crafted",
+      "Soft Light",
+      "AI Art"
+    ],
+    "thumbUrl": "output/thumbs/buddha-20261107-090616.webp",
+    "displayUrl": "output/display/buddha-20261107-090616.webp"
+  },
+  {
     "id": "buddha-20261106-091412",
     "title": "Humble Path #537",
     "imageUrl": "output/buddha-20261106-091412.jpg",
