@@ -1,5 +1,33 @@
 [
   {
+    "id": "buddha-20261108-090639",
+    "title": "Mindful Breath #876",
+    "imageUrl": "output/buddha-20261108-090639.jpg",
+    "prompt": "A woodblock print of a green-patinated bronze Buddha shown as a pair of hands resting in the meditation gesture, beside a still mountain lake with fireflies hovering, with cranes passing overhead. Lit by a single shaft of light. A palette of soft pastels. Every surface shows fine, crisp texture.",
+    "theme": "organic",
+    "variables": {
+      "material": "green-patinated bronze",
+      "pose": "shown as a pair of hands resting in the meditation gesture",
+      "place": "beside a still mountain lake",
+      "atmosphere": "with fireflies hovering",
+      "companions": "with cranes passing overhead",
+      "medium": "woodblock print",
+      "lighting": "a single shaft of light",
+      "palette": "soft pastels",
+      "finish": "every surface shows fine, crisp texture"
+    },
+    "seed": 749826,
+    "date": "2026-11-08",
+    "tags": [
+      "Hand-Crafted",
+      "Soft Light",
+      "Painted",
+      "AI Art"
+    ],
+    "thumbUrl": "output/thumbs/buddha-20261108-090639.webp",
+    "displayUrl": "output/display/buddha-20261108-090639.webp"
+  },
+  {
     "id": "buddha-20261107-090616",
     "title": "Quantum Silence #515",
     "imageUrl": "output/buddha-20261107-090616.jpg",
