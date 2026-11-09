@@ -1,5 +1,34 @@
 [
   {
+    "id": "buddha-20261109-093006",
+    "title": "Sublime Silence #340",
+    "imageUrl": "output/buddha-20261109-093006.jpg",
+    "prompt": "A fine art photograph with subtle film grain of an unglazed terracotta Buddha shown as a head only with timeless quiet eyes, on a windswept coastal cliff above a calm sea in the golden hour with incense smoke curling upward. Lit by the gentle glow of candlelight. A palette of muted greens and greys. Subtle, lifelike detail throughout.",
+    "theme": "organic",
+    "variables": {
+      "material": "unglazed terracotta",
+      "pose": "shown as a head only",
+      "expression": "with timeless quiet eyes",
+      "place": "on a windswept coastal cliff above a calm sea",
+      "time": "in the golden hour",
+      "atmosphere": "with incense smoke curling upward",
+      "medium": "fine art photograph with subtle film grain",
+      "lighting": "the gentle glow of candlelight",
+      "palette": "muted greens and greys",
+      "finish": "subtle, lifelike detail throughout"
+    },
+    "seed": 699123,
+    "date": "2026-11-09",
+    "tags": [
+      "Serenity",
+      "Hand-Crafted",
+      "Soft Light",
+      "AI Art"
+    ],
+    "thumbUrl": "output/thumbs/buddha-20261109-093006.webp",
+    "displayUrl": "output/display/buddha-20261109-093006.webp"
+  },
+  {
     "id": "buddha-20261108-090639",
     "title": "Mindful Breath #876",
     "imageUrl": "output/buddha-20261108-090639.jpg",
