@@ -1,5 +1,35 @@
 [
   {
+    "id": "buddha-20261110-091003",
+    "title": "Earthen Grace #834",
+    "imageUrl": "output/buddha-20261110-091003.jpg",
+    "prompt": "A watercolor on textured paper of a sun-dried clay Buddha carved in relief with a soft, compassionate expression, on a mirror-still black sea beneath a sky of slow-turning galaxies at first light with dust motes suspended in the light. Lit by soft diffused natural light. A palette of organic earth tones. Sharp focus with fine detail throughout.",
+    "theme": "organic",
+    "variables": {
+      "material": "sun-dried clay",
+      "pose": "carved in relief",
+      "expression": "with a soft, compassionate expression",
+      "place": "on a mirror-still black sea beneath a sky of slow-turning galaxies",
+      "time": "at first light",
+      "atmosphere": "with dust motes suspended in the light",
+      "medium": "watercolor on textured paper",
+      "lighting": "soft diffused natural light",
+      "palette": "organic earth tones",
+      "finish": "sharp focus with fine detail throughout"
+    },
+    "seed": 789146,
+    "date": "2026-11-10",
+    "tags": [
+      "Grounded Nature",
+      "Hand-Crafted",
+      "Soft Light",
+      "Painted",
+      "AI Art"
+    ],
+    "thumbUrl": "output/thumbs/buddha-20261110-091003.webp",
+    "displayUrl": "output/display/buddha-20261110-091003.webp"
+  },
+  {
     "id": "buddha-20261109-093006",
     "title": "Sublime Silence #340",
     "imageUrl": "output/buddha-20261109-093006.jpg",
