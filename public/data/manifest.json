@@ -1,5 +1,34 @@
 [
   {
+    "id": "buddha-20261111-091429",
+    "title": "Serene Grove #105",
+    "imageUrl": "output/buddha-20261111-091429.jpg",
+    "prompt": "A photorealistic photograph of a life-sized Sukhothai Thai smooth river-stone Buddha seated with one hand touching the earth with eyes closed in calm, in a rural courtyard filled with potted ferns under a full moon among falling cherry blossoms, with floating paper lanterns. Richly detailed down to the smallest surface.",
+    "theme": "organic",
+    "variables": {
+      "material": "smooth river-stone",
+      "pose": "seated with one hand touching the earth",
+      "expression": "with eyes closed in calm",
+      "scale": "life-sized",
+      "lineage": "Sukhothai Thai",
+      "place": "in a rural courtyard filled with potted ferns",
+      "time": "under a full moon",
+      "atmosphere": "among falling cherry blossoms",
+      "companions": "with floating paper lanterns",
+      "medium": "photorealistic photograph",
+      "finish": "richly detailed down to the smallest surface"
+    },
+    "seed": 688023,
+    "date": "2026-11-11",
+    "tags": [
+      "Serenity",
+      "Grounded Nature",
+      "AI Art"
+    ],
+    "thumbUrl": "output/thumbs/buddha-20261111-091429.webp",
+    "displayUrl": "output/display/buddha-20261111-091429.webp"
+  },
+  {
     "id": "buddha-20261110-091003",
     "title": "Earthen Grace #834",
     "imageUrl": "output/buddha-20261110-091003.jpg",
