@@ -1,5 +1,35 @@
 [
   {
+    "id": "buddha-20261112-092004",
+    "title": "Natural Balance #906",
+    "imageUrl": "output/buddha-20261112-092004.jpg",
+    "prompt": "An ink wash painting of a miniature Tibetan white marble Buddha reclining on one side with a serene downcast gaze, under the shade of an ancient weeping willow beside a quiet pond at dusk as light rain falls, with a sparrow perched on its shoulder. A palette of black and gold. Every surface shows fine, crisp texture.",
+    "theme": "organic",
+    "variables": {
+      "material": "white marble",
+      "pose": "reclining on one side",
+      "expression": "with a serene downcast gaze",
+      "scale": "miniature",
+      "lineage": "Tibetan",
+      "place": "under the shade of an ancient weeping willow beside a quiet pond",
+      "time": "at dusk",
+      "atmosphere": "as light rain falls",
+      "companions": "with a sparrow perched on its shoulder",
+      "medium": "ink wash painting",
+      "palette": "black and gold",
+      "finish": "every surface shows fine, crisp texture"
+    },
+    "seed": 409237,
+    "date": "2026-11-12",
+    "tags": [
+      "Serenity",
+      "Painted",
+      "AI Art"
+    ],
+    "thumbUrl": "output/thumbs/buddha-20261112-092004.webp",
+    "displayUrl": "output/display/buddha-20261112-092004.webp"
+  },
+  {
     "id": "buddha-20261111-091429",
     "title": "Serene Grove #105",
     "imageUrl": "output/buddha-20261111-091429.jpg",
