@@ -1,5 +1,35 @@
 [
   {
+    "id": "buddha-20261113-091713",
+    "title": "Calm Sanctuary #665",
+    "imageUrl": "output/buddha-20261113-091713.jpg",
+    "prompt": "An oil painting on canvas of a monumental Sri Lankan soft-glazed porcelain Buddha seated in meditation with hands resting in the lap with a gentle half-smile, beneath an old gnarled olive tree in a sunlit orchard under an overcast midday sky in gently falling snow. Lit by shafts of light through volumetric haze. A palette of warm amber and umber. Subtle, lifelike detail throughout.",
+    "theme": "organic",
+    "variables": {
+      "material": "soft-glazed porcelain",
+      "pose": "seated in meditation with hands resting in the lap",
+      "expression": "with a gentle half-smile",
+      "scale": "monumental",
+      "lineage": "Sri Lankan",
+      "place": "beneath an old gnarled olive tree in a sunlit orchard",
+      "time": "under an overcast midday sky",
+      "atmosphere": "in gently falling snow",
+      "medium": "oil painting on canvas",
+      "lighting": "shafts of light through volumetric haze",
+      "palette": "warm amber and umber",
+      "finish": "subtle, lifelike detail throughout"
+    },
+    "seed": 881372,
+    "date": "2026-11-13",
+    "tags": [
+      "Soft Light",
+      "Painted",
+      "AI Art"
+    ],
+    "thumbUrl": "output/thumbs/buddha-20261113-091713.webp",
+    "displayUrl": "output/display/buddha-20261113-091713.webp"
+  },
+  {
     "id": "buddha-20261112-092004",
     "title": "Natural Balance #906",
     "imageUrl": "output/buddha-20261112-092004.jpg",
