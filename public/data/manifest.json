@@ -1,5 +1,34 @@
 [
   {
+    "id": "buddha-20261114-151041",
+    "title": "Dawn Meditation #717",
+    "imageUrl": "output/buddha-20261114-151041.jpg",
+    "prompt": "A polished 3D render of a stardust-woven Buddha floating in lotus position with an understated knowing smile, inside an ancient cosmic cathedral of starlit stained glass etched with sacred geometry in endless starlit night with faint auroras shimmering overhead, with lotus flowers at its base. Lit by light glowing from within the figure. A palette of deep indigo and gold. A wide establishing shot. Sharp focus with fine detail throughout.",
+    "theme": "cosmic",
+    "variables": {
+      "material": "stardust-woven",
+      "pose": "floating in lotus position",
+      "expression": "with an understated knowing smile",
+      "place": "inside an ancient cosmic cathedral of starlit stained glass etched with sacred geometry",
+      "time": "in endless starlit night",
+      "atmosphere": "with faint auroras shimmering overhead",
+      "companions": "with lotus flowers at its base",
+      "medium": "polished 3D render",
+      "lighting": "light glowing from within the figure",
+      "palette": "deep indigo and gold",
+      "camera": "a wide establishing shot",
+      "finish": "sharp focus with fine detail throughout"
+    },
+    "seed": 837823,
+    "date": "2026-11-14",
+    "tags": [
+      "Sacred Geometry",
+      "AI Art"
+    ],
+    "thumbUrl": "output/thumbs/buddha-20261114-151041.webp",
+    "displayUrl": "output/display/buddha-20261114-151041.webp"
+  },
+  {
     "id": "buddha-20261113-091713",
     "title": "Calm Sanctuary #665",
     "imageUrl": "output/buddha-20261113-091713.jpg",
