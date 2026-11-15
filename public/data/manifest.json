@@ -1,5 +1,33 @@
 [
   {
+    "id": "buddha-20261115-154254",
+    "title": "River Stone #343",
+    "imageUrl": "output/buddha-20261115-154254.jpg",
+    "prompt": "An editorial nature photograph of a towering lichen-spotted basalt Buddha seated in lotus position with hairline cracks mended in gold, within a tranquil bamboo grove in the blue hour before sunrise. A palette of soft pastels. Richly detailed down to the smallest surface.",
+    "theme": "organic",
+    "variables": {
+      "material": "lichen-spotted basalt",
+      "pose": "seated in lotus position",
+      "expression": "with hairline cracks mended in gold",
+      "scale": "towering",
+      "place": "within a tranquil bamboo grove",
+      "time": "in the blue hour before sunrise",
+      "medium": "editorial nature photograph",
+      "palette": "soft pastels",
+      "finish": "richly detailed down to the smallest surface"
+    },
+    "seed": 541390,
+    "date": "2026-11-15",
+    "tags": [
+      "Serenity",
+      "Grounded Nature",
+      "Soft Light",
+      "AI Art"
+    ],
+    "thumbUrl": "output/thumbs/buddha-20261115-154254.webp",
+    "displayUrl": "output/display/buddha-20261115-154254.webp"
+  },
+  {
     "id": "buddha-20261114-151041",
     "title": "Dawn Meditation #717",
     "imageUrl": "output/buddha-20261114-151041.jpg",
