@@ -1,5 +1,34 @@
 [
   {
+    "id": "buddha-20261116-183923",
+    "title": "Soft Morning #361",
+    "imageUrl": "output/buddha-20261116-183923.jpg",
+    "prompt": "A documentary photograph with natural colors of a palm-sized reclaimed driftwood Buddha walking with quiet, deliberate steps with timeless quiet eyes, beside a shallow forest pool edged with tall reeds in the late afternoon. Lit by dramatic chiaroscuro with deep shadows. A palette of muted greens and greys. A medium shot at eye level. Every surface shows fine, crisp texture.",
+    "theme": "organic",
+    "variables": {
+      "material": "reclaimed driftwood",
+      "pose": "walking with quiet, deliberate steps",
+      "expression": "with timeless quiet eyes",
+      "scale": "palm-sized",
+      "place": "beside a shallow forest pool edged with tall reeds",
+      "time": "in the late afternoon",
+      "medium": "documentary photograph with natural colors",
+      "lighting": "dramatic chiaroscuro with deep shadows",
+      "palette": "muted greens and greys",
+      "camera": "a medium shot at eye level",
+      "finish": "every surface shows fine, crisp texture"
+    },
+    "seed": 338713,
+    "date": "2026-11-16",
+    "tags": [
+      "Serenity",
+      "Grounded Nature",
+      "AI Art"
+    ],
+    "thumbUrl": "output/thumbs/buddha-20261116-183923.webp",
+    "displayUrl": "output/display/buddha-20261116-183923.webp"
+  },
+  {
     "id": "buddha-20261115-154254",
     "title": "River Stone #343",
     "imageUrl": "output/buddha-20261115-154254.jpg",
