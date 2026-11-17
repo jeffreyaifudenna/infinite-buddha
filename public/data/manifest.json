@@ -1,5 +1,37 @@
 [
   {
+    "id": "buddha-20261117-174016",
+    "title": "Quiet Stillness #216",
+    "imageUrl": "output/buddha-20261117-174016.jpg",
+    "prompt": "A woodblock print of a life-sized gold-leafed wood Buddha shown as a bust, head and shoulders only with eyes closed in calm, inside a quiet cave temple, light falling from its entrance at dawn in soft drifting mist, with a single deer resting nearby. Lit by cool overcast light. A palette of near-monochrome greys with a single warm accent. Subtle, lifelike detail throughout.",
+    "theme": "organic",
+    "variables": {
+      "material": "gold-leafed wood",
+      "pose": "shown as a bust, head and shoulders only",
+      "expression": "with eyes closed in calm",
+      "scale": "life-sized",
+      "place": "inside a quiet cave temple, light falling from its entrance",
+      "time": "at dawn",
+      "atmosphere": "in soft drifting mist",
+      "companions": "with a single deer resting nearby",
+      "medium": "woodblock print",
+      "lighting": "cool overcast light",
+      "palette": "near-monochrome greys with a single warm accent",
+      "finish": "subtle, lifelike detail throughout"
+    },
+    "seed": 291801,
+    "date": "2026-11-17",
+    "tags": [
+      "Serenity",
+      "Grounded Nature",
+      "Soft Light",
+      "Painted",
+      "AI Art"
+    ],
+    "thumbUrl": "output/thumbs/buddha-20261117-174016.webp",
+    "displayUrl": "output/display/buddha-20261117-174016.webp"
+  },
+  {
     "id": "buddha-20261116-183923",
     "title": "Soft Morning #361",
     "imageUrl": "output/buddha-20261116-183923.jpg",
