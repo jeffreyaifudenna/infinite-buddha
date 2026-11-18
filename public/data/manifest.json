@@ -1,5 +1,32 @@
 [
   {
+    "id": "buddha-20261118-172012",
+    "title": "Grounded Peace #795",
+    "imageUrl": "output/buddha-20261118-172012.jpg",
+    "prompt": "A fine art photograph with subtle film grain of a miniature Kamakura Japanese worn soapstone Buddha standing with one hand raised in a gesture of reassurance, on a soft bed of pine needles beneath a towering pine at twilight. Lit by dappled light filtering through leaves. Sharp focus with fine detail throughout.",
+    "theme": "organic",
+    "variables": {
+      "material": "worn soapstone",
+      "pose": "standing with one hand raised in a gesture of reassurance",
+      "scale": "miniature",
+      "lineage": "Kamakura Japanese",
+      "place": "on a soft bed of pine needles beneath a towering pine",
+      "time": "at twilight",
+      "medium": "fine art photograph with subtle film grain",
+      "lighting": "dappled light filtering through leaves",
+      "finish": "sharp focus with fine detail throughout"
+    },
+    "seed": 682150,
+    "date": "2026-11-18",
+    "tags": [
+      "Grounded Nature",
+      "Soft Light",
+      "AI Art"
+    ],
+    "thumbUrl": "output/thumbs/buddha-20261118-172012.webp",
+    "displayUrl": "output/display/buddha-20261118-172012.webp"
+  },
+  {
     "id": "buddha-20261117-174016",
     "title": "Quiet Stillness #216",
     "imageUrl": "output/buddha-20261117-174016.jpg",
