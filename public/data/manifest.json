@@ -1,5 +1,34 @@
 [
   {
+    "id": "buddha-20261119-172620",
+    "title": "Tranquil Shade #163",
+    "imageUrl": "output/buddha-20261119-172620.jpg",
+    "prompt": "A watercolor on textured paper of a monumental translucent glass Buddha shown as a pair of hands resting in the meditation gesture, in a terraced hillside tea garden under a full moon, with a small pool of koi at its feet. Lit by warm rim lighting. A palette of black and gold. Richly detailed down to the smallest surface.",
+    "theme": "organic",
+    "variables": {
+      "material": "translucent glass",
+      "pose": "shown as a pair of hands resting in the meditation gesture",
+      "scale": "monumental",
+      "place": "in a terraced hillside tea garden",
+      "time": "under a full moon",
+      "companions": "with a small pool of koi at its feet",
+      "medium": "watercolor on textured paper",
+      "lighting": "warm rim lighting",
+      "palette": "black and gold",
+      "finish": "richly detailed down to the smallest surface"
+    },
+    "seed": 589877,
+    "date": "2026-11-19",
+    "tags": [
+      "Grounded Nature",
+      "Soft Light",
+      "Painted",
+      "AI Art"
+    ],
+    "thumbUrl": "output/thumbs/buddha-20261119-172620.webp",
+    "displayUrl": "output/display/buddha-20261119-172620.webp"
+  },
+  {
     "id": "buddha-20261118-172012",
     "title": "Grounded Peace #795",
     "imageUrl": "output/buddha-20261118-172012.jpg",
