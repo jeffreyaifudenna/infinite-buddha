@@ -1,5 +1,34 @@
 [
   {
+    "id": "buddha-20261120-170046",
+    "title": "Timeless Solitude #112",
+    "imageUrl": "output/buddha-20261120-170046.jpg",
+    "prompt": "An ink wash painting of a towering weathered teak Buddha carved in relief, beside a trickling garden waterfall surrounded by ferns at first light. Lit by the gentle glow of candlelight. A palette of warm amber and umber. Every surface shows fine, crisp texture.",
+    "theme": "organic",
+    "variables": {
+      "material": "weathered teak",
+      "pose": "carved in relief",
+      "scale": "towering",
+      "place": "beside a trickling garden waterfall surrounded by ferns",
+      "time": "at first light",
+      "medium": "ink wash painting",
+      "lighting": "the gentle glow of candlelight",
+      "palette": "warm amber and umber",
+      "finish": "every surface shows fine, crisp texture"
+    },
+    "seed": 747429,
+    "date": "2026-11-20",
+    "tags": [
+      "Grounded Nature",
+      "Hand-Crafted",
+      "Soft Light",
+      "Painted",
+      "AI Art"
+    ],
+    "thumbUrl": "output/thumbs/buddha-20261120-170046.webp",
+    "displayUrl": "output/display/buddha-20261120-170046.webp"
+  },
+  {
     "id": "buddha-20261119-172620",
     "title": "Tranquil Shade #163",
     "imageUrl": "output/buddha-20261119-172620.jpg",
