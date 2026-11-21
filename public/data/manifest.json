@@ -1,5 +1,33 @@
 [
   {
+    "id": "buddha-20261121-161323",
+    "title": "Peaceful Valley #322",
+    "imageUrl": "output/buddha-20261121-161323.jpg",
+    "prompt": "An oil painting on canvas of a palm-sized iridescent chrome Buddha seated with one hand touching the earth with a soft, compassionate expression, beside a gentle mountain stream flowing over smooth river stones. Lit by soft diffused natural light. A palette of organic earth tones. Subtle, lifelike detail throughout.",
+    "theme": "organic",
+    "variables": {
+      "material": "iridescent chrome",
+      "pose": "seated with one hand touching the earth",
+      "expression": "with a soft, compassionate expression",
+      "scale": "palm-sized",
+      "place": "beside a gentle mountain stream flowing over smooth river stones",
+      "medium": "oil painting on canvas",
+      "lighting": "soft diffused natural light",
+      "palette": "organic earth tones",
+      "finish": "subtle, lifelike detail throughout"
+    },
+    "seed": 785136,
+    "date": "2026-11-21",
+    "tags": [
+      "Grounded Nature",
+      "Soft Light",
+      "Painted",
+      "AI Art"
+    ],
+    "thumbUrl": "output/thumbs/buddha-20261121-161323.webp",
+    "displayUrl": "output/display/buddha-20261121-161323.webp"
+  },
+  {
     "id": "buddha-20261120-170046",
     "title": "Timeless Solitude #112",
     "imageUrl": "output/buddha-20261120-170046.jpg",
