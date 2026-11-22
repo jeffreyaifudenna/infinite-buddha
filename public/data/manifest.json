@@ -1,5 +1,34 @@
 [
   {
+    "id": "buddha-20261122-162300",
+    "title": "Whispering Pines #606",
+    "imageUrl": "output/buddha-20261122-162300.jpg",
+    "prompt": "A photorealistic photograph of a Gandharan polished black lacquer Buddha shown as a head only, within a secluded stone courtyard shaded by cherry trees in the golden hour among drifting autumn leaves, with small lit candles arranged before it. A palette of soft pastels. A low angle looking up at the figure. Sharp focus with fine detail throughout.",
+    "theme": "organic",
+    "variables": {
+      "material": "polished black lacquer",
+      "pose": "shown as a head only",
+      "lineage": "Gandharan",
+      "place": "within a secluded stone courtyard shaded by cherry trees",
+      "time": "in the golden hour",
+      "atmosphere": "among drifting autumn leaves",
+      "companions": "with small lit candles arranged before it",
+      "medium": "photorealistic photograph",
+      "palette": "soft pastels",
+      "camera": "a low angle looking up at the figure",
+      "finish": "sharp focus with fine detail throughout"
+    },
+    "seed": 736876,
+    "date": "2026-11-22",
+    "tags": [
+      "Grounded Nature",
+      "Soft Light",
+      "AI Art"
+    ],
+    "thumbUrl": "output/thumbs/buddha-20261122-162300.webp",
+    "displayUrl": "output/display/buddha-20261122-162300.webp"
+  },
+  {
     "id": "buddha-20261121-161323",
     "title": "Peaceful Valley #322",
     "imageUrl": "output/buddha-20261121-161323.jpg",
