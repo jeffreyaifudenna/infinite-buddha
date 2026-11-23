@@ -1,5 +1,31 @@
 [
   {
+    "id": "buddha-20261123-201913",
+    "title": "Rooted Harmony #160",
+    "imageUrl": "output/buddha-20261123-201913.jpg",
+    "prompt": "A documentary photograph with natural colors of a dark walnut Buddha seated in meditation with hands resting in the lap with a gentle half-smile, in a moss-covered forest clearing in clear still air. A palette of near-monochrome greys with a single warm accent. Richly detailed down to the smallest surface.",
+    "theme": "organic",
+    "variables": {
+      "material": "dark walnut",
+      "pose": "seated in meditation with hands resting in the lap",
+      "expression": "with a gentle half-smile",
+      "place": "in a moss-covered forest clearing",
+      "atmosphere": "in clear still air",
+      "medium": "documentary photograph with natural colors",
+      "palette": "near-monochrome greys with a single warm accent",
+      "finish": "richly detailed down to the smallest surface"
+    },
+    "seed": 308471,
+    "date": "2026-11-23",
+    "tags": [
+      "Grounded Nature",
+      "Soft Light",
+      "AI Art"
+    ],
+    "thumbUrl": "output/thumbs/buddha-20261123-201913.webp",
+    "displayUrl": "output/display/buddha-20261123-201913.webp"
+  },
+  {
     "id": "buddha-20261122-162300",
     "title": "Whispering Pines #606",
     "imageUrl": "output/buddha-20261122-162300.jpg",
