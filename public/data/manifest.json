@@ -1,5 +1,32 @@
 [
   {
+    "id": "buddha-20261124-193332",
+    "title": "Quiet Horizon #610",
+    "imageUrl": "output/buddha-20261124-193332.jpg",
+    "prompt": "A woodblock print of a life-sized carved cedar Buddha walking with quiet, deliberate steps, under the canopy of an ancient oak in a forest grove. Lit by a single shaft of light. Every surface shows fine, crisp texture.",
+    "theme": "organic",
+    "variables": {
+      "material": "carved cedar",
+      "pose": "walking with quiet, deliberate steps",
+      "scale": "life-sized",
+      "place": "under the canopy of an ancient oak in a forest grove",
+      "medium": "woodblock print",
+      "lighting": "a single shaft of light",
+      "finish": "every surface shows fine, crisp texture"
+    },
+    "seed": 175498,
+    "date": "2026-11-24",
+    "tags": [
+      "Serenity",
+      "Grounded Nature",
+      "Hand-Crafted",
+      "Painted",
+      "AI Art"
+    ],
+    "thumbUrl": "output/thumbs/buddha-20261124-193332.webp",
+    "displayUrl": "output/display/buddha-20261124-193332.webp"
+  },
+  {
     "id": "buddha-20261123-201913",
     "title": "Rooted Harmony #160",
     "imageUrl": "output/buddha-20261123-201913.jpg",
