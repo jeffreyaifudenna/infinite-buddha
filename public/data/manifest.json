@@ -1,5 +1,33 @@
 [
   {
+    "id": "buddha-20261125-184120",
+    "title": "Sacred Echo #310",
+    "imageUrl": "output/buddha-20261125-184120.jpg",
+    "prompt": "A fine art photograph with subtle film grain of a miniature green-patinated bronze Buddha shown as a bust, head and shoulders only with an understated knowing smile, in a sheltered garden alcove of deep shade and soft earth in the blue hour before sunrise with dust motes suspended in the light. Subtle, lifelike detail throughout.",
+    "theme": "organic",
+    "variables": {
+      "material": "green-patinated bronze",
+      "pose": "shown as a bust, head and shoulders only",
+      "expression": "with an understated knowing smile",
+      "scale": "miniature",
+      "place": "in a sheltered garden alcove of deep shade and soft earth",
+      "time": "in the blue hour before sunrise",
+      "atmosphere": "with dust motes suspended in the light",
+      "medium": "fine art photograph with subtle film grain",
+      "finish": "subtle, lifelike detail throughout"
+    },
+    "seed": 584712,
+    "date": "2026-11-25",
+    "tags": [
+      "Grounded Nature",
+      "Hand-Crafted",
+      "Soft Light",
+      "AI Art"
+    ],
+    "thumbUrl": "output/thumbs/buddha-20261125-184120.webp",
+    "displayUrl": "output/display/buddha-20261125-184120.webp"
+  },
+  {
     "id": "buddha-20261124-193332",
     "title": "Quiet Horizon #610",
     "imageUrl": "output/buddha-20261124-193332.jpg",
