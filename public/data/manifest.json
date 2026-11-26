@@ -1,5 +1,34 @@
 [
   {
+    "id": "buddha-20261126-182900",
+    "title": "Grounded Earth #330",
+    "imageUrl": "output/buddha-20261126-182900.jpg",
+    "prompt": "A watercolor on textured paper of a moss-covered stone Buddha seated in lotus position with a serene downcast gaze, on a mirror-flat salt pan reflecting a pale aurora under an overcast midday sky among falling cherry blossoms. Lit by shafts of light through volumetric haze. A palette of black and gold. Sharp focus with fine detail throughout.",
+    "theme": "organic",
+    "variables": {
+      "material": "moss-covered stone",
+      "pose": "seated in lotus position",
+      "expression": "with a serene downcast gaze",
+      "place": "on a mirror-flat salt pan reflecting a pale aurora",
+      "time": "under an overcast midday sky",
+      "atmosphere": "among falling cherry blossoms",
+      "medium": "watercolor on textured paper",
+      "lighting": "shafts of light through volumetric haze",
+      "palette": "black and gold",
+      "finish": "sharp focus with fine detail throughout"
+    },
+    "seed": 444330,
+    "date": "2026-11-26",
+    "tags": [
+      "Serenity",
+      "Grounded Nature",
+      "Painted",
+      "AI Art"
+    ],
+    "thumbUrl": "output/thumbs/buddha-20261126-182900.webp",
+    "displayUrl": "output/display/buddha-20261126-182900.webp"
+  },
+  {
     "id": "buddha-20261125-184120",
     "title": "Sacred Echo #310",
     "imageUrl": "output/buddha-20261125-184120.jpg",
