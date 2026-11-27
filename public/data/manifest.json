@@ -1,5 +1,32 @@
 [
   {
+    "id": "buddha-20261127-181546",
+    "title": "Serene Dawn #576",
+    "imageUrl": "output/buddha-20261127-181546.jpg",
+    "prompt": "An ink wash painting of a Tang-dynasty Chinese matte ceramic Buddha reclining on one side, on a high mountain overlook above drifting clouds with incense smoke curling upward. Lit by cool overcast light. A palette of muted greens and greys. Richly detailed down to the smallest surface.",
+    "theme": "organic",
+    "variables": {
+      "material": "matte ceramic",
+      "pose": "reclining on one side",
+      "lineage": "Tang-dynasty Chinese",
+      "place": "on a high mountain overlook above drifting clouds",
+      "atmosphere": "with incense smoke curling upward",
+      "medium": "ink wash painting",
+      "lighting": "cool overcast light",
+      "palette": "muted greens and greys",
+      "finish": "richly detailed down to the smallest surface"
+    },
+    "seed": 121845,
+    "date": "2026-11-27",
+    "tags": [
+      "Hand-Crafted",
+      "Painted",
+      "AI Art"
+    ],
+    "thumbUrl": "output/thumbs/buddha-20261127-181546.webp",
+    "displayUrl": "output/display/buddha-20261127-181546.webp"
+  },
+  {
     "id": "buddha-20261126-182900",
     "title": "Grounded Earth #330",
     "imageUrl": "output/buddha-20261126-182900.jpg",
