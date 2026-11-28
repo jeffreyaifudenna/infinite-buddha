@@ -1,5 +1,32 @@
 [
   {
+    "id": "buddha-20261128-165741",
+    "title": "Mossy Stone #433",
+    "imageUrl": "output/buddha-20261128-165741.jpg",
+    "prompt": "An oil painting on canvas of a hand-hewn granite Buddha shown as a pair of hands resting in the meditation gesture, inside a humble wooden tea pavilion with open windows framing a garden at dawn in gently falling snow. Every surface shows fine, crisp texture.",
+    "theme": "organic",
+    "variables": {
+      "material": "hand-hewn granite",
+      "pose": "shown as a pair of hands resting in the meditation gesture",
+      "place": "inside a humble wooden tea pavilion with open windows framing a garden",
+      "time": "at dawn",
+      "atmosphere": "in gently falling snow",
+      "medium": "oil painting on canvas",
+      "finish": "every surface shows fine, crisp texture"
+    },
+    "seed": 342022,
+    "date": "2026-11-28",
+    "tags": [
+      "Grounded Nature",
+      "Hand-Crafted",
+      "Soft Light",
+      "Painted",
+      "AI Art"
+    ],
+    "thumbUrl": "output/thumbs/buddha-20261128-165741.webp",
+    "displayUrl": "output/display/buddha-20261128-165741.webp"
+  },
+  {
     "id": "buddha-20261127-181546",
     "title": "Serene Dawn #576",
     "imageUrl": "output/buddha-20261127-181546.jpg",
